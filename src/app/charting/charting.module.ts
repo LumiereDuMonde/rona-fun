@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+// import { MatNativeDateModule } from '@angular/material/core';
+// import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatInputModule } from '@angular/material/input';
 
 import { ChartingRoutingModule } from './charting-routing.module';
 import { ChartingComponent } from './charting.component';
@@ -7,12 +12,17 @@ import { StoreModule } from '@ngrx/store';
 import * as fromCharting from './reducers'
 import { EffectsModule } from '@ngrx/effects';
 import { ChartingEffects } from './effects/charting.effects';
+import { ChartPresentationComponent } from './chart-presentation/chart-presentation.component';
+import { FormsModule } from '@angular/forms';
+import { CoreModule } from '../core/core.module';
+
 
 
 @NgModule({
-  declarations: [ChartingComponent],
+  declarations: [ChartingComponent, ChartPresentationComponent],
   imports: [
     CommonModule,
+    ChartsModule,
     ChartingRoutingModule,
     /**
          * StoreModule.forFeature is used for composing state
@@ -31,6 +41,8 @@ import { ChartingEffects } from './effects/charting.effects';
      * whether they are registered once or multiple times.
      */
     EffectsModule.forFeature([ChartingEffects]),
+    FormsModule ,
+    CoreModule
   ]
 })
 export class ChartingModule { }

@@ -5,7 +5,7 @@ import { PreloadAllModules, PreloadingStrategy, RouterModule, Routes } from '@an
 
 const routes: Routes = [
   { path: '', redirectTo: '/charting', pathMatch: 'full' },  
-  { path: 'charting', loadChildren: () => import('./charting/charting.module').then(m => m.ChartingModule) }
+  { path: 'charting', loadChildren: () => import('./charting/charting.module').then(m => m.ChartingModule) }  
 ];
 
 @NgModule({

@@ -4,8 +4,12 @@
 
 export const environment = {
   production: false,
-  nationalAPIURL: 'https://api.covidtracking.com/v1/us/daily.json'
+  nationalAPIURL: 'https://api.covidtracking.com/v1/us/daily.json',  
+  signInURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBJqVnwW4N_lXqqpEEMTCXjvcXmzJTSNPE',
+  API_KEY: 'AIzaSyBJqVnwW4N_lXqqpEEMTCXjvcXmzJTSNPE'  
 };
+
+export const stateAPIURL = (state) => `https://api.covidtracking.com/v1/states/${state}/daily.json`;
 
 /*
  * For easier debugging in development mode, you can import the following file

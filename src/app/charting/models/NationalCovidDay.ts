@@ -32,7 +32,8 @@ export class NationalCovidDay {
         public hash: string
         ) {
             try {
-                this.date = new Date(_date / 10000, _date % 10000 / 100, _date % 100);    
+                this.date = new Date( _date / 10000,  _date % 10000 / 100-1,  _date % 100); 
+                  
             } catch (error) {
                 console.log(`Error in date conversion, National Covid Day adapter ${error}`);
             }
@@ -46,8 +47,8 @@ export class NationalCovidDay {
 @Injectable({
     providedIn: "root",
   })
-  export class ChartingAdapter implements Adapter<NationalCovidDay> {
-    adapt(item: any): NationalCovidDay {
+  export class NationalCovidDayAdapter implements Adapter<NationalCovidDay> {
+     adapt(item: any): NationalCovidDay {
       return new NationalCovidDay(item.date, 
         item.states, 
         item.positive, 

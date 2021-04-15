@@ -41,6 +41,18 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
       return result;
     };
   }
+
+  /*
+    Reset ngrx state if someone logs out
+  */
+  export function clearState(reducer: ActionReducer<State>): ActionReducer<State> {
+    return function(state: State, action: Action): State {
+      if (action.type === '[Auth] Logout') {
+        state = undefined;
+      }
+      return reducer(state, action);
+    };
+  }
   
   /**
    * By default, @ngrx/store uses combineReducers with the reducer map to compose
@@ -48,8 +60,8 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
    * that will be composed to form the root meta-reducer.
    */
   export const metaReducers: MetaReducer<State>[] = !environment.production
-    ? [logger]
-    : [];
+    ? [logger,clearState]
+    : [clearState];
   
 
 

@@ -1,0 +1,10 @@
+<span>{{chartTitle}}</span>
+<canvas baseChart [datasets]="chartdata" [labels]="chartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+  [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins" #myChart="base-chart">
+</canvas>
+<div class="spinner" *ngIf="loading">
+  <div class="center">
+    <mat-spinner>
+    </mat-spinner>
+  </div>
+</div>

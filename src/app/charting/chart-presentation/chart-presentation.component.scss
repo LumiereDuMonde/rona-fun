@@ -1,0 +1,23 @@
+span {
+    font-size: larger;
+    font-weight: 600;    
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    
+}
+
+.spinner {
+    width: 100%;    
+    height: 100%;
+    background-color: rgba(255,255,255, 0.7);
+    z-index: 9999;
+    position: absolute;
+    margin: 0;
+}

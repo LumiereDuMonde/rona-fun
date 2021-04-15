@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { of } from "rxjs";
+import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
+import { Action, Store } from "@ngrx/store";
+import { Observable, of } from "rxjs";
 import { catchError, exhaustMap, map } from "rxjs/operators";
 import * as ChartingActions from '../actions/charting.actions';
 import { ChartingService } from "../charting.service";
-import { ChartingAdapter } from "../models/NationalCovidDay";
+import { CovidData } from "../models/CovidData.model";
+import * as fromCharting from '../reducers';
 
 
 @Injectable({
@@ -12,30 +14,41 @@ import { ChartingAdapter } from "../models/NationalCovidDay";
 })
 
 export class ChartingEffects {
-    constructor(private actions$: Actions, private chartingService: ChartingService, private adapter: ChartingAdapter) { }
+    constructor(private actions$: Actions,
+        private chartingService: ChartingService,
+        private store: Store) { }
 
-startGettingNationalData$ = createEffect(() => {
-    return this.actions$.pipe(
+    startGettingNationalData$ = createEffect(() => {
+        return this.actions$.pipe(
             ofType(ChartingActions.GET_COVID_DATA_START),
-            /** An EMPTY observable only emits completion. Replace with your own observable stream */
-            exhaustMap(() => 
-                this.chartingService.getNationalCovidData().pipe(
-                    map((data: any[]) => data.map((item) => this.adapter.adapt(item))),
-                    map(
-                        response => {
-                            response.sort(function (a, b) { 
-                                return a.date.getTime() - b.date.getTime()
-                            })
-                            return ChartingActions.GET_COVID_DATA_SUCCESS({data: response})
-                        }
-                    ),
-                    catchError(
-                        (error) => 
-                        of(ChartingActions.GET_COVID_DATA_FAILURE({errorMsg: error.message}))
-                    )
-                )
-            )
-            );
-});
+            concatLatestFrom(() => this.store.select(fromCharting.selectSelected)),
+            exhaustMap(([, data]) => this.getCovidData(data))
+        );
+    });
 
+    changingCovidSelector$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ChartingActions.SET_CURRENT_SELECTION),
+            exhaustMap((action) => this.getCovidData(action.selection))
+        )
+    });
+
+    getCovidData = function (data): Observable<Action> {
+        return this.chartingService.getCovidData(data).pipe(
+            map((data: any[]) => data.map((item) => CovidData.adapt(item))),
+            map(
+                (response: CovidData[]) => {
+                    response.sort(function (a, b) {
+                        return a.date.getTime() - b.date.getTime()
+                    })
+                    return ChartingActions.GET_COVID_DATA_SUCCESS({ data: response })
+                }
+            ),
+            catchError(
+                (error) =>
+                    of(ChartingActions.GET_COVID_DATA_FAILURE({ errorMsg: error.message }))
+            )
+        )
+    }
 }
+

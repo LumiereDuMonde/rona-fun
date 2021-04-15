@@ -8,11 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ChartsModule } from 'ng2-charts';
 import { StoreModule } from '@ngrx/store';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+
 
 import { EffectsModule } from '@ngrx/effects';
 import { ChartingEffects } from './charting/effects/charting.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ROOT_REDUCERS, metaReducers } from './store/app.reducer';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import { CoreModule } from './core/core.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -21,43 +27,31 @@ import { ROOT_REDUCERS, metaReducers } from './store/app.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule, 
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot(ROOT_REDUCERS, {
       metaReducers,
       runtimeChecks: {
         // strictStateImmutability and strictActionImmutability are enabled by default
-        strictStateSerializability: true,
-        strictActionSerializability: true,
+        strictStateSerializability: false,
+        strictActionSerializability: false,
         strictActionWithinNgZone: true,
         strictActionTypeUniqueness: true,
       },
     }),
     EffectsModule.forRoot([ChartingEffects]),
-    /**
-         * @ngrx/router-store keeps router state up-to-date in the store.
-         */
     StoreRouterConnectingModule.forRoot(),
-
-    /**
-     * Store devtools instrument the store retaining past versions of state
-     * and recalculating new states. This enables powerful time-travel
-     * debugging.
-     *
-     * To use the debugger, install the Redux Devtools extension for either
-     * Chrome or Firefox
-     *
-     * See: https://github.com/zalmoxisus/redux-devtools-extension
-     */
     StoreDevtoolsModule.instrument({
       name: 'NgRx Charting Test',
-
-      // In a production build you would want to disable the Store Devtools
       // logOnly: environment.production,
     }),
-    ChartsModule
+    ChartsModule,
+    CoreModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
