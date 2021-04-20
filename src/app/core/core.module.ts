@@ -43,13 +43,21 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveComponentModule } from '@ngrx/component';
+import { ImagePreloader } from './imagepreloader.directive';
+
 
 @NgModule({
   declarations:[
-    LoadingSpinnerComponent,
+    LoadingSpinnerComponent, 
+    ImagePreloader   
   ],
-  exports: [
+  exports: [  
+    FormsModule, 
+    ReactiveFormsModule,      
     LoadingSpinnerComponent,
+    ImagePreloader,
     A11yModule,
     ClipboardModule,
     CdkStepperModule,
@@ -94,8 +102,9 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    ReactiveComponentModule
   ]
 })
-export class CoreModule {}
+export class CoreModule {} 
 
 

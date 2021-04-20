@@ -2,19 +2,19 @@
 <div class="data-date-range">
   <mat-form-field>
     <mat-label>Choose a start date</mat-label>
-    <input [value]="$startDate | async" #startDate (dateChange)="startDateChanged(startDate.value)" [min]="minDate"
+    <input [value]="$startDate | ngrxPush" #startDate (dateChange)="startDateChanged(startDate.value)" [min]="minDate"
       [max]="maxDate" matInput [matDatepicker]="startPicker" placeholder="Choose a date" readonly
       (click)="startPicker.open()">
     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-    <mat-datepicker #startPicker [startAt]="$startDate | async"></mat-datepicker>
+    <mat-datepicker #startPicker [startAt]="$startDate | ngrxPush"></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Choose a end date</mat-label>
-    <input [value]="$endDate | async" #endDate (dateChange)="endDateChanged(endDate.value)" [min]="minDate"
+    <input [value]="$endDate | ngrxPush" #endDate (dateChange)="endDateChanged(endDate.value)" [min]="minDate"
       [max]="maxDate" matInput [matDatepicker]="endPicker" placeholder="Choose a date" readonly
       (click)="endPicker.open()">
     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-    <mat-datepicker #endPicker [startAt]="$endDate | async"></mat-datepicker>
+    <mat-datepicker #endPicker [startAt]="$endDate | ngrxPush"></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>State or National</mat-label>
@@ -24,16 +24,16 @@
   </mat-form-field>
 </div>
 <div class="chart-row">
-  <app-chart-presentation [chartdata]="$infectionData | async" [chartLabels]="$chartLabels | async"
-    [chartTitle]="'Infections'" [lineChartColors]="infectionChartColors" [loading]="$loading | async">
+  <app-chart-presentation [chartdata]="$infectionData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush"
+    [chartTitle]="'Infections'" [lineChartColors]="infectionChartColors" [loading]="$loading | ngrxPush">
   </app-chart-presentation>
-  <app-chart-presentation [chartdata]="$deathData | async" [chartLabels]="$chartLabels | async" [chartTitle]="'Deaths'"
-    [lineChartColors]="deathChartColors"  [loading]="$loading | async">
+  <app-chart-presentation [chartdata]="$deathData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush" [chartTitle]="'Deaths'"
+    [lineChartColors]="deathChartColors"  [loading]="$loading | ngrxPush">
   </app-chart-presentation>
-  <app-chart-presentation [chartdata]="$testsData | async" [chartLabels]="$chartLabels | async" [chartTitle]="'Tests'"
-    [lineChartColors]="testChartColors"  [loading]="$loading | async">
+  <app-chart-presentation [chartdata]="$testsData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush" [chartTitle]="'Tests'"
+    [lineChartColors]="testChartColors"  [loading]="$loading | ngrxPush">
   </app-chart-presentation>
-  <app-chart-presentation [chartdata]="$hospitalData | async" [chartLabels]="$chartLabels | async"
-    [chartTitle]="'Hospitalized'" [lineChartColors]="hospitalChartColors"  [loading]="$loading | async">
+  <app-chart-presentation [chartdata]="$hospitalData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush"
+    [chartTitle]="'Hospitalized'" [lineChartColors]="hospitalChartColors"  [loading]="$loading | ngrxPush">
   </app-chart-presentation>
 </div>

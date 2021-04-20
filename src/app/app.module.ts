@@ -8,9 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ChartsModule } from 'ng2-charts';
 import { StoreModule } from '@ngrx/store';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-
 
 import { EffectsModule } from '@ngrx/effects';
 import { ChartingEffects } from './charting/effects/charting.effects';
@@ -20,6 +17,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -27,8 +25,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, 
-    ReactiveFormsModule,
+
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot(ROOT_REDUCERS, {
@@ -49,7 +46,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     ChartsModule,
     CoreModule,
-    AuthModule
+    AuthModule    
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]

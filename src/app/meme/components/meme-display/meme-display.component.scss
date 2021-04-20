@@ -1,0 +1,75 @@
+@use "~@material/image-list";
+@import "~@material/image-list/mdc-image-list";
+
+.frame {
+    height: 86%;    
+    width: 100%;
+    z-index: 100;
+    top: 0;
+    margin-top: 10px;
+    background-color: white;
+    overflow-y: scroll;   
+    overflow-x: hidden; 
+    position: relative;
+  }
+
+.my-image-list {
+    justify-content: center;
+
+    @include image-list.masonry-columns(6);
+
+    @media(max-width: 1400px) {
+        @include image-list.masonry-columns(5);
+    }
+
+    @media(max-width: 1020px) {
+        @include image-list.masonry-columns(4);
+    }
+
+    @media(max-width: 960px) {
+        @include image-list.masonry-columns(3);
+    }
+
+    @media(max-width: 768px) {
+        @include image-list.masonry-columns(2);
+    }
+
+    @media(max-width: 480px) {
+        @include image-list.masonry-columns(1);
+    }
+
+    &__item {
+        background-color: #ccc;
+    }
+
+    .mdc-image-list__item {
+        width: 250px; 
+        img {
+            height: 100%;           
+            max-width: 100%;
+            &.cover {    
+                object-fit: fill;
+              }            
+        }
+    }
+
+    .mdc-image-list__supporting {
+        justify-content: start;
+
+        .mdc-image-list__label {
+            padding-right: 1rem;
+            mat-icon {
+                vertical-align: middle;
+                
+                &:hover{
+                  cursor: pointer;
+                }
+                &.selected {
+                    color: darkred;
+                }
+            }
+        }
+    }
+}
+
+

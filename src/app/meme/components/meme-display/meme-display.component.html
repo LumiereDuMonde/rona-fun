@@ -1,0 +1,36 @@
+
+<!-- <section class="memes-layout">
+    <div class="meme-card" *ngFor="let item of memes">
+        <div class="image-container">
+            <img mat-card-image src="{{item.images?.fixed_width?.url}}" alt="item.title">
+            <div class="meme-card-actions">
+                <mat-icon>
+                    favorite_border
+                </mat-icon>
+                <mat-icon>
+                    share
+                </mat-icon>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<div class="frame" (scrolled)="scrolled()" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500" [scrollWindow]="false">
+     <ul class="mdc-image-list mdc-image-list mdc-image-list--with-text-protection my-image-list">
+        <li class="mdc-image-list__item" *ngFor="let item of memes; let index=index;">            
+            <img class="mdc-image-list__image cover" [img-preloader]="item.images?.fixed_width?.url">            
+            <div class="mdc-image-list__supporting">
+                <span class="mdc-image-list__label" (click)="toggleFavorite(item)">
+                    <mat-icon [class.selected]="isInFavorites(item.id)">
+                        {{isInFavorites(item.id) ? 'favorite' : 'favorite_border' }}
+                    </mat-icon>
+                </span>
+                <span class="mdc-image-list__label">
+                    <mat-icon>
+                        share
+                    </mat-icon>
+                </span>
+            </div>
+        </li>
+    </ul> 
+</div>
