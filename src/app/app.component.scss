@@ -10,27 +10,27 @@
   mat-icon {
     opacity: 0.5;
     margin-right: 0.5em;
-           
+
   }
 
-  
+
 
   .rona-toolbar {
-    .logo  {       
-        color: gold;
-        font-size: 2rem;    
-        height: auto;
-        width: auto;      
-        padding-left: 0.5rem;  
+    .logo {
+      color: gold;
+      font-size: 2rem;
+      height: auto;
+      width: auto;
+      padding-left: 0.5rem;
     }
 
-    .bookmark{
+    .bookmark {
       margin-left: auto;
       color: darkgrey;
-      opacity: 1;          
+      opacity: 1;
     }
 
-    
+
 
     .rona-is-mobile {
       position: fixed;
@@ -52,6 +52,10 @@
       /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
              `<body>` to be our scrolling element for mobile layouts. */
       flex: 1 0 auto;
+    }
+
+    .link-active {
+      background: #ccc;
     }
   }
 }
