@@ -1,4 +1,6 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GIF } from '../../models/GIF.model';
 
 
@@ -15,7 +17,7 @@ export class MemeDisplayComponent implements OnInit  {
   @Output() fetchMore = new EventEmitter<void>();
   
 
-  constructor() { }
+  constructor(private _clipboard: Clipboard, private _snackBar: MatSnackBar) { }
   
   ngOnInit(): void {   
          
@@ -32,5 +34,10 @@ export class MemeDisplayComponent implements OnInit  {
 
   isInFavorites(id: string) {
     return this.favorites.includes(id);
+  }
+
+  copyToClipBoard(val: string) {
+    this._clipboard.copy(val);
+    this._snackBar.open('Meme Copied!', 'Dismiss', { duration: 2000});
   }
 }

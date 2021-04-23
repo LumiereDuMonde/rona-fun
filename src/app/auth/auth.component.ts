@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { loginUser } from './models/loginUser.model';
@@ -16,6 +16,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   
   isLoading$: Observable<boolean>;  
   subscription: Subscription;
+  email = 'test@test.com'
+  password= 'ABigPasswordIsHere#';
 
   constructor(private store: Store<fromAuth.State>, private _snackBar: MatSnackBar) { }
 
@@ -26,7 +28,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       if (error?.length > 0) {
         this._snackBar.open(error);
       }
-    });    
+    });        
   }
 
   ngOnDestroy(): void {

@@ -10,16 +10,27 @@
   mat-icon {
     opacity: 0.5;
     margin-right: 0.5em;
+           
   }
+
+  
 
   .rona-toolbar {
     .logo  {       
         color: gold;
         font-size: 2rem;    
         height: auto;
-        width: auto;
-        margin-left: auto;
+        width: auto;      
+        padding-left: 0.5rem;  
     }
+
+    .bookmark{
+      margin-left: auto;
+      color: darkgrey;
+      opacity: 1;          
+    }
+
+    
 
     .rona-is-mobile {
       position: fixed;

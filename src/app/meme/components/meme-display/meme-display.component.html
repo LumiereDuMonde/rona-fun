@@ -8,7 +8,7 @@
                         {{isInFavorites(item.id) ? 'favorite' : 'favorite_border' }}
                     </mat-icon>
                 </span>
-                <span class="mdc-image-list__label">
+                <span class="mdc-image-list__label" (click)="copyToClipBoard(item?.url)">
                     <mat-icon>
                         share
                     </mat-icon>

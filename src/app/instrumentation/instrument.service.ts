@@ -27,7 +27,7 @@ export class InstrumentService implements OnInit, OnDestroy {
 
 
   startCollection() {
-    this.currentGas = 9.8;
+    this.currentGas = 4.9;
     this.currentSpeed = 67;
     this.currentWind = 5.5;
     this.currentRPM = 4500;

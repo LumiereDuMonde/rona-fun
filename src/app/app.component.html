@@ -1,7 +1,7 @@
 <div class="rona-container" [class.rona-is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="rona-toolbar">
-      <button mat-icon-button (click)="snav.toggle()" *ngIf="true"><mat-icon *ngIf="true">menu</mat-icon></button>
-      <mat-icon [matBadge]="$favorites | ngrxPush">bookmark</mat-icon>
+      <button mat-icon-button onclick="this.blur()" (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <mat-icon class="bookmark" [matBadge]="$favorites | ngrxPush" matBadgeColor="warn" >bookmark</mat-icon>
       <mat-icon class="logo">construction</mat-icon><h1 class="rona-app-name">Rona Fun</h1>
     </mat-toolbar>
     <mat-sidenav-container class="rona-sidenav-container"
