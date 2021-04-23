@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MemeRoutingModule } from './meme-routing.module';
+
 import { MemeComponent } from './meme.component';
 import { MemeSearchBarContainerComponent } from './containers/meme-search-bar-container/meme-search-bar-container.component';
 import { MemeSearchBarComponentComponent } from './components/meme-search-bar-component/meme-search-bar-component.component';
@@ -18,8 +18,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
   declarations: [MemeComponent, MemeSearchBarContainerComponent, MemeSearchBarComponentComponent, MemeDisplayContainerComponent, MemeDisplayComponent],
   imports: [
-    CommonModule,
-    MemeRoutingModule,
+    CommonModule,    
     StoreModule.forFeature(fromMeme.memeFeatureKey, fromMeme.reducers),
     EffectsModule.forFeature([MemeEffects]),
     CoreModule,

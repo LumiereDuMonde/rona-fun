@@ -16,6 +16,7 @@ import { ROOT_REDUCERS, metaReducers } from './store/app.reducer';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
+import { MemeModule } from './meme/meme.module';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     ChartsModule,
     CoreModule,
-    AuthModule    
+    AuthModule,
+    MemeModule    
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]
