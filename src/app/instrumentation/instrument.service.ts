@@ -1,9 +1,8 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { of, Subject, Subscription } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { timer } from 'rxjs';
-import { catchError, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Instrumentation } from './models/instrumentation.model';
 import * as InstrumentActions from './actions/instrumentation.actions';
 
@@ -19,15 +18,12 @@ export class InstrumentService implements OnInit, OnDestroy {
   private currentTemp = 0;
 
   private stop: Subject<void> = new Subject();
-  // public current$: Observable<Instrumentation> = of({ gas: 0, wind: 0, rpm: 0, temp: 0, mph: 0 });
-  // private sub : Subscription;
-
 
   constructor(private store: Store) { }
 
 
   startCollection() {
-    this.currentGas = 4.9;
+    this.currentGas = 4.2;
     this.currentSpeed = 67;
     this.currentWind = 5.5;
     this.currentRPM = 4500;
@@ -61,7 +57,7 @@ export class InstrumentService implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.stop)
       ).subscribe(() => {
-        let adjustment = this.randomInRange(-100, 100);
+        let adjustment = this.randomInRange(-100, 105);
         // don't go below 0 and above 6000      
         this.currentRPM += (this.currentRPM + adjustment) > 0 && (this.currentRPM + adjustment < 6000) ? adjustment : 0;
         // ran out of gas
@@ -90,19 +86,6 @@ export class InstrumentService implements OnInit, OnDestroy {
         this.currentTemp += ((this.currentTemp + adjustment) > 74) && (this.currentTemp + adjustment < 80) ? adjustment : 0;
         this.store.dispatch(InstrumentActions.INSTRUMENT_TEMP_UPDATE({val: this.roundToTenth(this.currentTemp)}));
       });
-
-    /* this.current$ = timer(0, 1000).pipe(
-      takeUntil(this.stop),
-      map (() => {        
-        let x = this.getCurrentValues();        
-        return x;
-      }),     
-      tap((v) => {
-        
-      }) 
-    );    
-    
-    this.sub = this.current$.subscribe(); */
   }
 
   stopCollection() {
@@ -110,13 +93,11 @@ export class InstrumentService implements OnInit, OnDestroy {
     this.currentSpeed = 0;
     this.currentWind = 0;
     this.currentRPM = 0;
-    this.currentTemp = 0;
-    //this.sub?.unsubscribe();
+    this.currentTemp = 0;    
     this.stop.next();    
   }
 
-  randomInRange(min, max) {
-    //return Math.floor(Math.random() * (max - min + 1)) + min;
+  randomInRange(min, max) {    
     return Math.random() * (max - min) + min;
   }
 
@@ -134,8 +115,7 @@ export class InstrumentService implements OnInit, OnDestroy {
 
   }
   
-  ngOnDestroy(): void {
-    // this.sub?.unsubscribe();
+  ngOnDestroy(): void {    
     this.stop.next();
   }
 

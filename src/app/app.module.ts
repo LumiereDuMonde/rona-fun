@@ -26,7 +26,6 @@ import { MemeModule } from './meme/meme.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot(ROOT_REDUCERS, {

@@ -1,15 +1,15 @@
-<mat-card class="example-card">
+<mat-card >
     <mat-card-header>
         <mat-card-title>Please Login</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
-            <mat-form-field class="example-full-width">
+            <mat-form-field >
                 <mat-label>Email</mat-label>
                 <input type="email" placeholder="Enter email" id="email" class="form-control" matInput [(ngModel)]="email"
                     name="email" required email >
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field >
                 <mat-label>Password</mat-label>
                 <input type="password" placeholder="Password" id="password" class="form-control" [(ngModel)]="password" required
                     name="password" matInput minlength="6" >

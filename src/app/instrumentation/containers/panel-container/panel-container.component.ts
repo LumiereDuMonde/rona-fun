@@ -14,7 +14,7 @@ import * as fromInstruments from '../../reducers';
 export class PanelContainerComponent implements OnInit, OnDestroy {
 
   gasThresholds = {
-      '0': { color: 'crimson' },
+      '0': { color: 'red' },
       '2.5': { color: 'gold' },
       '4': { color: 'forestgreen' }
     };
@@ -22,7 +22,7 @@ export class PanelContainerComponent implements OnInit, OnDestroy {
   RPMThresholds = {
     '0': { color: 'forestgreen'},
     '5000': { color: 'gold'},
-    '5500': { color: 'crimson'}
+    '5500': { color: 'red'}
   };  
 
   fuel$: Observable<number>;
