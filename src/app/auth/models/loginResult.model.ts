@@ -1,4 +1,4 @@
-export interface loginResult {
+export interface LoginResult {
     idToken: string;
     email: string;
     refreshToken:string;

@@ -26,7 +26,7 @@ export const initialState: State = adapter.getInitialState({
     selectedId: null
 });
 
-export const memeFeatureKey = 'meme';
+export const memeFeatureKey = 'memes';
 
 const memeReducer = createReducer(
     initialState,
@@ -38,6 +38,8 @@ const memeReducer = createReducer(
     on(MemeActions.MEME_SET_SEARCH, (state, action) => ({...state, search: action.search})),
     on(MemeActions.MEME_SEARCH_START, (state) => ({...state, loading: true})),    
     on(MemeActions.MEME_SEARCH_FINISH , (state, action) => (adapter.addMany(action.data, { ...state, pagination: { ...action.pagination }, loading: false }))),
+    on(MemeActions.MEME_SEARCH_ERROR, (state, action) => ({...state, error: action.msg})),
+    on(MemeActions.MEME_TRENDING_ERROR, (state, action) => ({...state, error: action.msg}))
 );
 
 export function reducer(state: State | undefined, action: Action) {

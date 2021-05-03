@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
-import { loginUser } from '../models/loginUser.model';
+import { LoginUser } from '../models/LoginUser.model';
 import * as AuthActions from '../actions/auth.actions';
 
 @Injectable({
@@ -13,14 +13,6 @@ import * as AuthActions from '../actions/auth.actions';
 export class AuthEffects {
   constructor(private actions$: Actions, private authService: AuthService, private router: Router) { }
 
-  //debugging logger, would of course be removed in production
-//   logActions$ = createEffect(() =>
-//     this.actions$.pipe(
-//       tap((action) =>{
-//        console.log(action);
-//       })
-//     ), { dispatch: false });  
-
   startLogin$ = createEffect(() => this.actions$.pipe(
     // only continue in this observable chain if of the type
     // of the below observable
@@ -28,7 +20,7 @@ export class AuthEffects {
     // grab the signup out and pass it down the observable chain
     map((action) => action.signup),
     //
-    exhaustMap((auth: loginUser) =>
+    exhaustMap((auth: LoginUser) =>
       this.authService.login(auth.email, auth.password).pipe(
         // map the response to a new login_success action 
         // map wraps the return value with an observable
@@ -52,20 +44,20 @@ export class AuthEffects {
   notLoggedIn$ = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.NOT_LOGGED_IN),
     tap(() => this.router.navigate(['/auth']))
-  ), { dispatch: false });  
-
-      
+  ), { dispatch: false });        
 
   autoLoginStart$ = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.AUTOLOGIN_START),
     map(() => {
-      const loadedUser = this.authService.autoLogin();
-      if (loadedUser?.token){
-        return AuthActions.AUTOLOGIN_SUCCESS({user: loadedUser})
+      const loadedUser = this.authService.autoLogin();    
+      let returnVal;
+      if (loadedUser?.token) {
+        returnVal = AuthActions.AUTOLOGIN_SUCCESS({user: loadedUser})                    
       } else {
-        return AuthActions.LOGOUT();
+        returnVal = AuthActions.LOGOUT()
       }
-    })
+      return returnVal;
+    })    
   ));
 
 }

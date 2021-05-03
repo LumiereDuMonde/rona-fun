@@ -45,7 +45,7 @@ export class CovidData implements CovidDataInterface {
             this.date = new Date(_date / 10000, _date % 10000 / 100 - 1, _date % 100);
 
         } catch (error) {
-            console.log(`Error in date conversion, National Covid Day adapter ${error}`);
+            this.date = null;            
         }
 
         this.name = state_hash[_name];

@@ -3,11 +3,11 @@
         <mat-card-title>Current Vehicle Readings</mat-card-title> 
     </mat-card-header>
     <mat-card-content>
-        <app-gauge [min]="0" [max]="120" title="Speed" unit="MPH" [value]="speed$ | ngrxPush" label="Speed">
+        <app-gauge id="speedGauge" [min]="0" [max]="120" title="Speed" unit="MPH" [value]="speed$ | ngrxPush" label="Speed">
         </app-gauge>
-        <app-gauge [min]="0" [max]="6000" title="RPM" unit="" [value]="rpm$ | ngrxPush" label="RPM"
+        <app-gauge id="rpmGauge" [min]="0" [max]="6000" title="RPM" unit="" [value]="rpm$ | ngrxPush" label="RPM"
             [threshold]="RPMThresholds"></app-gauge>
-        <app-gauge [min]="0" [max]="10" title="Gas" unit="gallons" [value]="fuel$ | ngrxPush" label="Gas"
+        <app-gauge id="gasGauge" [min]="0" [max]="10" title="Gas" unit="gallons" [value]="fuel$ | ngrxPush" label="Gas"
             [threshold]="gasThresholds" type="semi"></app-gauge>
     </mat-card-content>
 </mat-card>
@@ -16,15 +16,15 @@
         <mat-card-title>Environmental Factors</mat-card-title>
     </mat-card-header>    
     <mat-card-content>
-        <app-gauge [min]="0" [max]="60" title="Wind" unit="MPH" [value]="wind$ | ngrxPush" label="Wind">
+        <app-gauge id="windGauge" [min]="0" [max]="60" title="Wind" unit="MPH" [value]="wind$ | ngrxPush" label="Wind">
         </app-gauge>
-        <app-gauge [min]="0" [max]="120" title="Temp" unit="F" [value]="temp$ | ngrxPush" label="Temperature">
+        <app-gauge id="tempGauge" [min]="0" [max]="120" title="Temp" unit="F" [value]="temp$ | ngrxPush" label="Temperature">
         </app-gauge>
     </mat-card-content>
 </mat-card>
 <div class="button-container">
     <div class="inner-container">
-        <button (click)="start()" mat-raised-button color="primary" [disabled]="(started$ | ngrxPush)">Start</button>
-        <button (click)="stop()" mat-raised-button color="warn" [disabled]="!(started$ | ngrxPush)">Stop</button>
+        <button id="startButton" (click)="start()" mat-raised-button color="primary" [disabled]="(started$ | ngrxPush)">Start</button>
+        <button id="stopButton" (click)="stop()" mat-raised-button color="warn" [disabled]="!(started$ | ngrxPush)">Stop</button>
     </div>
 </div>

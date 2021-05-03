@@ -1,15 +1,15 @@
 <div class="frame" (scrolled)="scrolled()" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" [scrollWindow]="false">
      <ul class="mdc-image-list mdc-image-list mdc-image-list--with-text-protection my-image-list">
         <li class="mdc-image-list__item" *ngFor="let item of memes; let index=index;">            
-            <img class="mdc-image-list__image cover" [img-preloader]="item.images?.fixed_width?.url">            
+            <img class="mdc-image-list__image cover" id="image{{index}}" [img-preloader]="item.images?.fixed_width?.url">            
             <div class="mdc-image-list__supporting">
                 <span class="mdc-image-list__label" (click)="toggleFavorite(item)">
-                    <mat-icon [class.selected]="isInFavorites(item.id)">
+                    <mat-icon id="favorite{{index}}" [class.selected]="isInFavorites(item.id)">
                         {{isInFavorites(item.id) ? 'favorite' : 'favorite_border' }}
                     </mat-icon>
                 </span>
                 <span class="mdc-image-list__label" (click)="copyToClipBoard(item?.url)">
-                    <mat-icon>
+                    <mat-icon id="share{{index}}">
                         share
                     </mat-icon>
                 </span>

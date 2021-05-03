@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { BaseChartDirective, Color } from 'ng2-charts';
 import * as moment from 'moment/moment';
-import * as Chart from 'chart.js';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ViewChild } from '@angular/core';
 
@@ -18,6 +17,7 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
   @Input() chartTitle: string = '';
   @Input() lineChartColors: Color[];
   @Input() loading: boolean;
+  @Input() chartDataEmpty: boolean = false;
   
   lineChartData: ChartDataSets[] = [
     { data: [], label: 'Infections' },
@@ -79,11 +79,11 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
   private a: any;
   mobileQuery: MediaQueryList;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private media: MediaMatcher) { }
+  constructor(private media: MediaMatcher) { }  //private changeDetectorRef: ChangeDetectorRef
 
   ngOnDestroy(): void {
     //this.mobileQuery.removeListener(this._mobileQueryListener);
-    this.mobileQuery.removeEventListener('change', this.changeEventListener);    
+    this.mobileQuery?.removeEventListener('change', this.changeEventListener);    
   }
 
   ngOnInit(): void {

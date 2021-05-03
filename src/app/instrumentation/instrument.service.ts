@@ -116,7 +116,7 @@ export class InstrumentService implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {    
-    this.stop.next();
+    this?.stop.next();
   }
 
   roundToTenth(val : number) : number {

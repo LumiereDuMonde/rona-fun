@@ -1,23 +1,23 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from 'src/app/models/user.model';
-import { loginUser } from '../models/loginUser.model';
-import { loginResult } from '../models/loginResult.model'
+import { LoginUser } from '../models/LoginUser.model';
+import { LoginResult } from '../models/LoginResult.model'
 
 const namespace = '[Auth] '
 
 export const SIGNUP_START = createAction(
     namespace + 'Signup Start',
-    props<{signup: loginUser}>()
+    props<{signup: LoginUser}>()
 );
 
 export const LOGIN_START = createAction(
     namespace + 'Login Start',
-    props<{signup: loginUser}>()
+    props<{signup: LoginUser}>()
 );
 
 export const LOGIN_RESPONSE = createAction(
     namespace + 'Login Response',
-    props<{user: loginResult}>()
+    props<{user: LoginResult}>()
 );
 
 export const LOGIN_SUCCESS = createAction(

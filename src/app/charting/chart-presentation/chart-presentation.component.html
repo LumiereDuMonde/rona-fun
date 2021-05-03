@@ -1,8 +1,14 @@
-<span>{{chartTitle}}</span>
-<canvas baseChart [datasets]="chartdata" [labels]="chartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
-  [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins" #myChart="base-chart">
-</canvas>
-<div class="spinner" *ngIf="loading">
+<h3 id="title">{{chartTitle}}</h3>
+<div id="container">
+  <canvas id="chart" baseChart [datasets]="chartdata" [labels]="chartLabels" [options]="lineChartOptions"
+    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins"
+    #myChart="base-chart">
+  </canvas>
+  <div class="overlay-background transparent" *ngIf="!loading && chartDataEmpty">
+    <h2 class="center nodata">No Data Available</h2>
+  </div>  
+</div>  
+<div class="overlay-background" *ngIf="loading">
   <div class="center">
     <mat-spinner>
     </mat-spinner>

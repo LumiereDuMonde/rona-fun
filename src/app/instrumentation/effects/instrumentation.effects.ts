@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
-import { exhaustMap, map, tap } from "rxjs/operators";
+import { exhaustMap } from "rxjs/operators";
 import * as InstrumentActions from '../actions/instrumentation.actions';
 import { InstrumentService } from "../instrument.service";
 

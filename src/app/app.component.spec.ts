@@ -1,35 +1,85 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ChangeDetectorRef } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AuthService } from './auth/auth.service';
+import { MatSidenav } from '@angular/material/sidenav';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {  RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+
+class MockAuthComponent { }
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let store: any;
+  let media: any;
+  let auth: any;
+  beforeEach(() => {    
+    media = jasmine.createSpyObj('MediaMatcher', ['matchMedia']);
+    media.matchMedia.and.returnValue({
+      matches: true,
+      removeListener: function () { },
+      addListener: function (b) { }
+    });        
+    const changeDetectorRefStub = () => ({ detectChanges: () => ({}) });
+    store = jasmine.createSpyObj('Store',['dispatch','select']);
+    auth = jasmine.createSpyObj('AuthService',['logout']);
+    TestBed.configureTestingModule({      
+      declarations: [AppComponent],
       imports: [
-        RouterTestingModule
+        CoreModule,
+        BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([
+          {
+              path: 'auth',
+              component: MockAuthComponent
+          }
+      ])        
       ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+      providers: [
+        { provide: MediaMatcher, useValue: media },
+        { provide: ChangeDetectorRef, useFactory: changeDetectorRefStub },
+        { provide: Store, useValue: store },
+        { provide: AuthService, useValue: auth }
+      ]
+    });
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('can load instance', () => {
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'rona-fun'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('rona-fun');
-  });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('rona-fun app is running!');
+
+  describe('DOM', () => {
+    it(`title has default value`, () => {
+      expect(component.title).toEqual(`Rona fun`);
+    });        
+  });
+  
+
+  describe('Methods', () => {
+    it('logout makes expected calls', () => {
+      const sidenav = jasmine.createSpyObj('MatSidenav',['toggle']);
+      sidenav.toggle.and.returnValue(true);
+      auth.logout.and.callThrough();      
+      component.logout(sidenav);
+      expect(auth.logout).toHaveBeenCalled();
+      expect(sidenav.toggle).toHaveBeenCalled();
+    });
+
+    it('ngOnInit makes expected calls', () => {      
+      store.dispatch.and.returnValue(null);
+      store.select.and.returnValue(of(2));
+      component.ngOnInit();
+      expect(store.dispatch).toHaveBeenCalled();
+      expect(store.select).toHaveBeenCalled();
+    });
   });
 });

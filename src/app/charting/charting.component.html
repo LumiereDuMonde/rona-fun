@@ -2,7 +2,7 @@
 <div class="data-date-range">
   <mat-form-field>
     <mat-label>Choose a start date</mat-label>
-    <input [value]="$startDate | ngrxPush" #startDate (dateChange)="startDateChanged(startDate.value)" [min]="minDate"
+    <input id="startDate" [value]="$startDate | ngrxPush" #startDate (dateChange)="startDateChanged(startDate.value)" [min]="minDate"
       [max]="maxDate" matInput [matDatepicker]="startPicker" placeholder="Choose a date" readonly
       (click)="startPicker.open()">
     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
@@ -10,7 +10,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Choose a end date</mat-label>
-    <input [value]="$endDate | ngrxPush" #endDate (dateChange)="endDateChanged(endDate.value)" [min]="minDate"
+    <input id="endDate" [value]="$endDate | ngrxPush" #endDate (dateChange)="endDateChanged(endDate.value)" [min]="minDate"
       [max]="maxDate" matInput [matDatepicker]="endPicker" placeholder="Choose a date" readonly
       (click)="endPicker.open()">
     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
@@ -18,22 +18,22 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>State or National</mat-label>
-    <mat-select value="US" (selectionChange)="nationStateValueChanged($event.value)">
+    <mat-select id="regionSelector" value="US" (selectionChange)="nationStateValueChanged($event.value)">
       <mat-option *ngFor="let state of states" [value]="state.value">{{ state.title }}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 <div class="chart-row">
-  <app-chart-presentation [chartdata]="$infectionData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush"
-    [chartTitle]="'Infections'" [lineChartColors]="infectionChartColors" [loading]="$loading | ngrxPush">
+  <app-chart-presentation id="infectionsChart" [chartdata]="$infectionData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush"
+    [chartTitle]="'Infections'" [lineChartColors]="infectionChartColors" [loading]="$loading | ngrxPush" [chartDataEmpty]="($infectionData | ngrxPush)[0].empty && ($infectionData | ngrxPush)[1].empty">
   </app-chart-presentation>
-  <app-chart-presentation [chartdata]="$deathData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush" [chartTitle]="'Deaths'"
-    [lineChartColors]="deathChartColors"  [loading]="$loading | ngrxPush">
+  <app-chart-presentation id="deathChart" [chartdata]="$deathData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush" [chartTitle]="'Deaths'"
+    [lineChartColors]="deathChartColors"  [loading]="$loading | ngrxPush"  [chartDataEmpty]="($deathData | ngrxPush)[0].empty && ($deathData | ngrxPush)[1].empty">
   </app-chart-presentation>
-  <app-chart-presentation [chartdata]="$testsData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush" [chartTitle]="'Tests'"
-    [lineChartColors]="testChartColors"  [loading]="$loading | ngrxPush">
+  <app-chart-presentation id="testChart" [chartdata]="$testsData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush" [chartTitle]="'Tests'"
+    [lineChartColors]="testChartColors"  [loading]="$loading | ngrxPush"  [chartDataEmpty]="($testsData | ngrxPush)[0].empty && ($testsData | ngrxPush)[1].empty">
   </app-chart-presentation>
-  <app-chart-presentation [chartdata]="$hospitalData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush"
-    [chartTitle]="'Hospitalized'" [lineChartColors]="hospitalChartColors"  [loading]="$loading | ngrxPush">
+  <app-chart-presentation id="hospitalChart" [chartdata]="$hospitalData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush"
+    [chartTitle]="'Hospitalized'" [lineChartColors]="hospitalChartColors"  [loading]="$loading | ngrxPush"  [chartDataEmpty]="($hospitalData | ngrxPush)[0].empty && ($hospitalData | ngrxPush)[1].empty">
   </app-chart-presentation>
 </div>

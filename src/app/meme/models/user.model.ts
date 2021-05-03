@@ -1,31 +1,31 @@
 interface IPublicUser {
     // Username - writable by staff and non-partner/artist users
-    username: string
+    username?: string
     // READ ONLY FIELDS BELOW
     // Unique ID
-    id: number
+    id?: number
     // URL to the user's avatar
-    avatar_url: string
-    is_verified: boolean
+    avatar_url?: string
+    is_verified?: boolean
 }
 
 export default interface IUser extends IPublicUser {
     // user about bio
-    about_bio: string
+    about_bio?: string
     // user's display name
-    display_name: string
-    user_type: 'partner' | 'artist' | 'user' | 'anonymous'
-    is_public: boolean
+    display_name?: string
+    user_type?: 'partner' | 'artist' | 'user' | 'anonymous'
+    is_public?: boolean
     // personal website URL
-    primary_site: string
+    primary_site?: string
     // twitter handle or url
-    twitter: string
+    twitter?: string
     // facebook url or handle
-    facebook: string
+    facebook?: string
     // instagram handle or url
-    instagram: string
+    instagram?: string
     // tumblr url
-    tumblr_site: string
+    tumblr_site?: string
     // READ ONLY FIELDS BELOW
     // twitter value as url
     twitter_url?: string

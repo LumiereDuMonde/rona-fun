@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
-import { loginUser } from './models/loginUser.model';
-import { loginResult } from './models/loginResult.model';
+import { LoginUser } from './models/LoginUser.model';
+import { LoginResult } from './models/LoginResult.model';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './actions/auth.actions';
 import * as fromAuth from './reducers';
@@ -16,23 +16,25 @@ import { Store } from '@ngrx/store';
   providedIn: 'root'
 })
 export class AuthService implements OnDestroy {  
-  subscription: Subscription;
+  private subscription: Subscription;
   private timer: any = null;  
 
   constructor(private http: HttpClient, private router: Router, private store: Store<fromApp.State>) {
-    this.subscription = this.store.select(fromAuth.selectAuthUser).subscribe((user) => {
+    this.subscription = this.store.select(fromAuth.selectAuthUser).subscribe((user) => {      
       this.clearTimer();
-      if (user){
+      if (user){        
         this.autoLogout(user.expirationMilliseconds);
-      }
+      } 
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 
   login(email: string, password: string) {
     return this.http
-      .post<loginResult>(environment.signInURL, new loginUser(email, password)); 
+      .post<LoginResult>(environment.signInURL, new LoginUser(email, password)); 
   }
 
   logout() {  
@@ -42,8 +44,8 @@ export class AuthService implements OnDestroy {
     this.router.navigate(['/auth']);
   }
 
-  clearTimer() {
-    if (this.timer) {
+  clearTimer() {    
+    if (this.timer) {      
       clearTimeout(this.timer);
       this.timer = null;
     }
@@ -64,7 +66,7 @@ export class AuthService implements OnDestroy {
     return loadedUser;
   }
 
-  handleAuthentication(res: loginResult) {
+  handleAuthentication(res: LoginResult) {
     const expirationDate = new Date(new Date().getTime() + +res.expiresIn * 1000);
     const user = new User(res.email, res.localId, res.idToken, expirationDate);
     localStorage.setItem('user', JSON.stringify(user));
@@ -72,7 +74,7 @@ export class AuthService implements OnDestroy {
   }
 
   handleError(errorResponse: HttpErrorResponse) {
-    let errorMsg = "An error has occurred.";
+    let errorMsg = "An error has occurred.";    
     switch (errorResponse?.error?.error?.message) {
       case "EMAIL_EXISTS":
         errorMsg = "Email already exists";

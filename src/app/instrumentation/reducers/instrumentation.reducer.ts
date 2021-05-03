@@ -10,7 +10,7 @@ export interface State {
     rpm: number;
 };
 
-const initialState: State = {
+export const initialState: State = {
     started: false,
     fuel: 0,
     speed: 0,

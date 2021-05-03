@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { loginUser } from './models/loginUser.model';
+import { LoginUser } from './models/LoginUser.model';
 import * as fromAuth from './reducers';
 import * as AuthActions from './actions/auth.actions';
 import { NgForm } from '@angular/forms';
@@ -24,15 +24,15 @@ export class AuthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading$ = this.store.select(fromAuth.selectAuthLoading);
     this.subscription = this.store.select(fromAuth.selectAuthError).subscribe(error => {
-      this._snackBar.dismiss();
-      if (error?.length > 0) {
+      this._snackBar.dismiss();      
+      if (error?.length > 0) {        
         this._snackBar.open(error);
       }
     });        
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe(); 
   }
 
 
@@ -40,7 +40,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     const email = form.value.email;
     const password = form.value.password;       
 
-    this.store.dispatch(AuthActions.LOGIN_START({signup: new loginUser(email, password)}));          
+    this.store.dispatch(AuthActions.LOGIN_START({signup: new LoginUser(email, password)}));          
   }  
 
 }

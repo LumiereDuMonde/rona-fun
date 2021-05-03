@@ -36,7 +36,7 @@ export const selectMemesState = createFeatureSelector<State, MemeState>(
 
 export const selectMemeState = createSelector(
     selectMemesState,
-    (state) => state.meme
+    (state) => state.memes
 );
 
 export const selectMemeLoading = createSelector(

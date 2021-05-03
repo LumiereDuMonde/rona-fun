@@ -15,7 +15,7 @@ import * as fromCharting from '../reducers';
 
 export class ChartingEffects {
     constructor(private actions$: Actions,
-        private chartingService: ChartingService,
+        private chartingService: ChartingService,        
         private store: Store) { }
 
     startGettingNationalData$ = createEffect(() => {
@@ -33,12 +33,14 @@ export class ChartingEffects {
         )
     });
 
-    getCovidData = function (data): Observable<Action> {
-        return this.chartingService.getCovidData(data).pipe(
-            map((data: any[]) => data.map((item) => CovidData.adapt(item))),
+    public getCovidData = function (data): Observable<Action> {        
+        return this.chartingService.getCovidTrackingData(data).pipe(
+            map((result: any[]) => {
+             return result?.map((item) => CovidData.adapt(item));
+            }),
             map(
                 (response: CovidData[]) => {
-                    response.sort(function (a, b) {
+                    response?.sort(function (a, b) {
                         return a.date.getTime() - b.date.getTime()
                     })
                     return ChartingActions.GET_COVID_DATA_SUCCESS({ data: response })

@@ -1,3 +1,5 @@
+// not currently lazy loaded, leaving in case I revert
+
 // import { NgModule } from '@angular/core';
 // import { RouterModule, Routes } from '@angular/router';
 // import { MemeComponent } from './meme.component';
@@ -9,3 +11,4 @@
 //   exports: [RouterModule]
 // })
 // export class MemeRoutingModule { }
+

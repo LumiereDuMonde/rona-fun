@@ -41,7 +41,7 @@ import { MemeModule } from './meme/meme.module';
     EffectsModule.forRoot([ChartingEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
-      name: 'NgRx Charting Test',
+      name: 'NgRx Charting',
       // logOnly: environment.production,
     }),
     ChartsModule,
