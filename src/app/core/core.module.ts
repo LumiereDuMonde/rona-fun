@@ -21,6 +21,7 @@ import { ReactiveComponentModule } from '@ngrx/component';
 import { ImagePreloader } from './imagepreloader.directive';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import {A11yModule} from '@angular/cdk/a11y';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatToolbarModule,
     ScrollingModule,
     ReactiveComponentModule,
-    MatSelectModule
+    MatSelectModule,
+    A11yModule
   ]
 })
 export class CoreModule { }

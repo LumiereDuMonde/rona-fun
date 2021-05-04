@@ -15,6 +15,7 @@ import { MemeDisplayComponent } from './components/meme-display/meme-display.com
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
+
 @NgModule({
   declarations: [MemeComponent, MemeSearchBarContainerComponent, MemeSearchBarComponentComponent, MemeDisplayContainerComponent, MemeDisplayComponent],
   imports: [

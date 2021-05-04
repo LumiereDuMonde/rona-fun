@@ -2,16 +2,29 @@
 @import "~@material/image-list/mdc-image-list";
 
 .frame {
-    height: 86%;    
+    height: 86%;
     width: 100%;
     z-index: 100;
     top: 0;
     margin-top: 10px;
     background-color: white;
-    overflow-y: scroll;   
-    overflow-x: hidden; 
+    overflow-y: scroll;
+    overflow-x: hidden;
     position: relative;
-  }
+
+    .loading-spinner {
+        width: 100%;
+        height: 3rem;
+        mat-spinner{
+            margin: 0 auto;            
+        }
+    }
+
+    .no-data-available{
+        text-align: center;
+        opacity: 0.5;        
+    }
+}
 
 .my-image-list {
     justify-content: center;
@@ -43,14 +56,16 @@
     }
 
     .mdc-image-list__item {
-        width: 250px; 
+        width: 250px;
         height: 250px;
+
         img {
-            height: 100%;           
+            height: 100%;
             max-width: 100%;
-            &.cover {    
+
+            &.cover {
                 object-fit: fill;
-              }            
+            }
         }
     }
 
@@ -59,18 +74,20 @@
 
         .mdc-image-list__label {
             padding-right: 1rem;
+
             mat-icon {
                 vertical-align: middle;
-                
-                &:hover{
-                  cursor: pointer;
+
+                &:hover {
+                    cursor: pointer;
                 }
+
                 &.selected {
                     color: darkred;
                 }
             }
         }
     }
+
+    
 }
-
-

@@ -7,11 +7,10 @@ import { of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 
-
+// TODO: decide on retry strategy on errors
 @Injectable({
     providedIn: 'root'
 })
-
 export class MemeEffects {
     constructor(private actions$: Actions,
         private memeService: MemeService,

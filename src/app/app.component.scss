@@ -48,6 +48,10 @@
          causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
     flex: 1;
 
+    .mat-drawer-content__remove-scrollbar {
+      overflow-y: hidden;
+    }
+
     .rona-is-mobile {
       /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
              `<body>` to be our scrolling element for mobile layouts. */

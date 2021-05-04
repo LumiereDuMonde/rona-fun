@@ -15,7 +15,7 @@ export class MemeDisplayComponent implements OnInit  {
   @Input() favorites: string[] = [];
   @Output() favoriteClicked = new EventEmitter<{meme: GIF, is_favorite: boolean}>();
   @Output() fetchMore = new EventEmitter<void>();
-  
+  @Input() loading: boolean = true;
 
   constructor(private _clipboard: Clipboard, private _snackBar: MatSnackBar) { }
   

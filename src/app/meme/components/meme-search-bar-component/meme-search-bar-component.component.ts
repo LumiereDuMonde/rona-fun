@@ -12,8 +12,8 @@ export class MemeSearchBarComponentComponent implements OnInit {
   @Output() doSearch = new EventEmitter<string>();
 
   constructor() { }
-
   ngOnInit(): void {
+
   }
 
   search() {

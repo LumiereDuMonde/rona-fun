@@ -1,1 +1,7 @@
-<app-meme-display [memes]="$memeData | ngrxPush" [favorites]="$favorites | ngrxPush" (favoriteClicked)="favoriteClicked($event)" (fetchMore)="fetchMore()"></app-meme-display>
+<app-meme-display 
+[memes]="$memeData | ngrxPush" 
+[favorites]="$favorites | ngrxPush" 
+[loading]="$loading | ngrxPush"
+(favoriteClicked)="favoriteClicked($event)" 
+(fetchMore)="fetchMore()">
+</app-meme-display>

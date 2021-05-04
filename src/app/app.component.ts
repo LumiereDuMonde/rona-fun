@@ -6,7 +6,8 @@ import * as AuthActions from './auth/actions/auth.actions';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import * as fromMeme from './meme/reducers';
-
+import * as fromApp from './store/app.reducer';
+import { Data } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnDestroy, OnInit {
   mobileQuery: MediaQueryList;
   title = 'Rona fun';
   $favorites: Observable<number>;
+  $route: Observable<string>;
 
 
   private _mobileQueryListener: () => void;
@@ -34,6 +36,7 @@ export class AppComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.store.dispatch(AuthActions.AUTOLOGIN_START());
     this.$favorites = this.store.select(fromMeme.selectFavoritesTotal);
+    this.$route = this.store.select(fromApp.selectUrl);    
   }
 
   ngOnDestroy(): void {

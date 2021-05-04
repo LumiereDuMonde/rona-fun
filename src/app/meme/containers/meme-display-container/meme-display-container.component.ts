@@ -14,12 +14,14 @@ export class MemeDisplayContainerComponent implements OnInit {
   
   $memeData: Observable<GIF[]>;
   $favorites: Observable<string[]>;
+  $loading: Observable<boolean>;
 
   constructor(private store: Store<fromMeme.State>) { }
 
   ngOnInit(): void {
     this.$memeData = this.store.select(fromMeme.selectAllMemes);
     this.$favorites = this.store.select(fromMeme.selectFavoritesIdsAsStringArray);
+    this.$loading = this.store.select(fromMeme.selectMemeLoading);
   }
 
   favoriteClicked(a: {meme: GIF, is_favorite: boolean}) {    

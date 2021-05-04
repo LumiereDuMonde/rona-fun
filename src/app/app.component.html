@@ -16,7 +16,7 @@
           <a mat-list-item (click)="logout(snav)"><mat-icon>logout</mat-icon> Logout</a>
         </mat-nav-list>
       </mat-sidenav>
-      <mat-sidenav-content>
+      <mat-sidenav-content [class.mat-drawer-content__remove-scrollbar]="($route | ngrxPush) === '/meme'">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
