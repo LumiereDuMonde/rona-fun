@@ -43,6 +43,15 @@ describe('MemeSearchBarComponentComponent', () => {
     it('has search input', () => {
       expect(wingman.numberOfMatchingItems('#search')).toBe(1);
     });   
+
+    it('input test matches searchTerm', async() => {
+      component.searchTerm = 'dog';
+      fixture.detectChanges();        
+      await fixture.whenStable().then(() => { 
+        const searchInputText = wingman.returnItem('#search')[0].nativeElement.value;            
+        expect(component.searchTerm == searchInputText).toBe(true);
+      }); 
+    });
   });
   
 });

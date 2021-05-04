@@ -1,1 +1,1 @@
-<app-meme-search-bar-component (doSearch)="doSearch($event)"></app-meme-search-bar-component>
+<app-meme-search-bar-component [searchTerm]="searchTerm | ngrxPush" (doSearch)="doSearch($event)"></app-meme-search-bar-component>

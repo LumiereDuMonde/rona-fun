@@ -20,8 +20,8 @@ export class MemeEffects {
     startGettingTrending$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(MemeActions.MEME_TRENDING_START),
-            concatLatestFrom(() => this.store.select(fromMeme.selectMemeTotal)),            
-            exhaustMap(([action,x]) => this.memeService.getTrending(x).pipe(
+            concatLatestFrom(() => this.store.select(fromMeme.selectMemeTotal)),
+            exhaustMap(([action, x]) => this.memeService.getTrending(x).pipe(
                 map((data, offset) => {
                     return MemeActions.MEME_TRENDING_FINISH({ data: data.data, pagination: data.pagination })
                 }),
@@ -36,7 +36,14 @@ export class MemeEffects {
     clearThenSearch$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(MemeActions.MEME_CLEAR_ITEMS_THEN_SEARCH),
-            map(x => MemeActions.MEME_SET_SEARCH({search: x.search}))
+            map(x => {
+                if (x.search.trim().length === 0) {
+                    return MemeActions.MEME_TRENDING_START();
+                }
+                else {
+                    return MemeActions.MEME_SET_SEARCH({ search: x.search })
+                }
+            })
         );
     });
 
@@ -50,8 +57,8 @@ export class MemeEffects {
     startGettingSearch$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(MemeActions.MEME_SEARCH_START),
-            concatLatestFrom(() => this.store.select(fromMeme.selectMemeAndTotalSearch)),                        
-            exhaustMap(([action,x]) => this.memeService.getSearchTerm(x.total, x.term).pipe(
+            concatLatestFrom(() => this.store.select(fromMeme.selectMemeAndTotalSearch)),
+            exhaustMap(([action, x]) => this.memeService.getSearchTerm(x.total, x.term).pipe(
                 map((data) => {
                     return MemeActions.MEME_SEARCH_FINISH({ data: data.data, pagination: data.pagination })
                 }),
@@ -61,6 +68,32 @@ export class MemeEffects {
                 )
             ))
         );
-    });    
+    });
+
+    decideToSearchAtStart$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(MemeActions.MEME_DECIDE_TO_SEARCH),
+            concatLatestFrom(() => this.store.select(fromMeme.selectMemeAndTotalSearch)),
+            map(([action, x]) => {   
+                if(action.isScroll) {
+                    if(x.term.length > 0) {
+                        return MemeActions.MEME_SEARCH_START();
+                    } else {
+                        return MemeActions.MEME_TRENDING_START();
+                    }
+                } else {
+                    if (x.total > 0) {
+                        return MemeActions.MEME_DECIDE_TO_SEARCH_FINISH();
+                    } else {
+                        if(x.term.length > 0) {
+                            return MemeActions.MEME_SEARCH_START();
+                        } else {
+                            return MemeActions.MEME_TRENDING_START();
+                        }                        
+                    }
+                }
+            })
+        );
+    });   
 
 }

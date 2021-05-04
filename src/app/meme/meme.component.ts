@@ -15,7 +15,7 @@ export class MemeComponent implements OnInit {
   constructor(private store: Store<fromMeme.State>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(MemeActions.MEME_TRENDING_START());
+    this.store.dispatch(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll: false}));
   }
 
 }

@@ -49,7 +49,7 @@ describe('MemeDisplayContainerComponent', () => {
       const storeStub: Store = fixture.debugElement.injector.get(Store);
       spyOn(storeStub, 'dispatch').and.callThrough();
       component.fetchMore();
-      expect(storeStub.dispatch).toHaveBeenCalledWith(MemeActions.MEME_TRENDING_START());
+      expect(storeStub.dispatch).toHaveBeenCalledWith(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll: true}));
     });
 
     it('favoriteClicked add', () => {

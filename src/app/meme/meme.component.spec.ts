@@ -11,9 +11,10 @@ import * as MemeActions from './actions/meme.actions';
 describe('MemeComponent', () => {
   let component: MemeComponent;
   let fixture: ComponentFixture<MemeComponent>;
+  let store: any;
 
   beforeEach(() => {
-    const storeStub = () => ({ dispatch: arg => ({}) });
+    store = jasmine.createSpyObj('Store',['dispatch']);
     TestBed.configureTestingModule({      
       declarations: [
         MemeComponent,
@@ -25,7 +26,7 @@ describe('MemeComponent', () => {
       imports: [
         CoreModule
       ],
-      providers: [{ provide: Store, useFactory: storeStub }]
+      providers: [{ provide: Store, useValue: store }]
     });
     fixture = TestBed.createComponent(MemeComponent);
     component = fixture.componentInstance;    
@@ -37,10 +38,8 @@ describe('MemeComponent', () => {
 
   describe('Methods', () => {
     it('ngOnInit calls store dispatch', () => {
-      const storeStub: Store = fixture.debugElement.injector.get(Store);
-      spyOn(storeStub, 'dispatch').and.callThrough();
       component.ngOnInit();
-      expect(storeStub.dispatch).toHaveBeenCalledWith(MemeActions.MEME_TRENDING_START());
+      expect(store.dispatch).toHaveBeenCalledWith(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll: false}));
     });
   });
 });

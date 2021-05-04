@@ -12,3 +12,5 @@ export const MEME_SET_SEARCH = createAction('[MEME] SET Search',props<{search: s
 export const MEME_CLEAR_ITEMS_THEN_SEARCH = createAction('[MEME] Clear Items Then Search',props<{search: string}>());
 export const MEME_SEARCH_FINISH = createAction('[MEME] Search Finish',props<{data: GIF[], pagination: GiphyPagination}>());
 export const MEME_SEARCH_ERROR = createAction('[MEME] Search Error',props<{msg: string}>());
+export const MEME_DECIDE_TO_SEARCH = createAction('[MEME] Decide which search then search', props<{isScroll: boolean}>());
+export const MEME_DECIDE_TO_SEARCH_FINISH = createAction('[MEME] Decide which search finish');

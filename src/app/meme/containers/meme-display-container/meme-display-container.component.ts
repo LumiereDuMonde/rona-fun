@@ -31,7 +31,7 @@ export class MemeDisplayContainerComponent implements OnInit {
   }
 
   fetchMore() {        
-    this.store.dispatch(MemeActions.MEME_TRENDING_START());
+    this.store.dispatch(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll: true}));
   }
 
 }

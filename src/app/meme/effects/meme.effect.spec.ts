@@ -42,10 +42,19 @@ describe('MemeEffects', () => {
       });
     });
 
-    it('MEME_CLEAR_ITEMS_THEN_SEARCH', () => {
-      actions$ = of(MemeActions.MEME_CLEAR_ITEMS_THEN_SEARCH({ search: 'cat' }));
-      effect.clearThenSearch$.subscribe((result) => {
-        expect(result).toEqual(MemeActions.MEME_SET_SEARCH({ search: 'cat' }));
+    describe('MEME_CLEAR_ITEMS_THEN_SEARCH', () => {
+      it('has search term should call MEME_SET_SEARCH', () => {
+        actions$ = of(MemeActions.MEME_CLEAR_ITEMS_THEN_SEARCH({ search: 'cat' }));
+        effect.clearThenSearch$.subscribe((result) => {
+          expect(result).toEqual(MemeActions.MEME_SET_SEARCH({ search: 'cat' }));
+        });
+      });
+
+      it('no search term should call MEME_TRENDING_START', () => {
+        actions$ = of(MemeActions.MEME_CLEAR_ITEMS_THEN_SEARCH({ search: '' }));
+        effect.clearThenSearch$.subscribe((result) => {
+          expect(result).toEqual(MemeActions.MEME_TRENDING_START());
+        });
       });
     });
 
@@ -91,6 +100,47 @@ describe('MemeEffects', () => {
       });
     });
 
+    describe('MEME_DECIDE_TO_SEARCH', () => {
+      it('Check if store has memes and a search term do nothing if it does at start of component', () => {
+        store.select.and.returnValue(of({ total: 1, term: 'dog' }));
+        actions$ = of(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll:false}));
+        effect.decideToSearchAtStart$.subscribe((result) => {
+          expect(result).toEqual(MemeActions.MEME_DECIDE_TO_SEARCH_FINISH());
+        });
+      });
+
+      it('Check if store has memes and a search term, scroll bar activated, get more', () => {
+        store.select.and.returnValue(of({ total: 1, term: 'dog' }));
+        actions$ = of(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll:true}));
+        effect.decideToSearchAtStart$.subscribe((result) => {
+          expect(result).toEqual(MemeActions.MEME_SEARCH_START());
+        });
+      });      
+
+      it('Check if store has search term but no memes, send action to clear/search', () => {
+        store.select.and.returnValue(of({ total: 0, term: 'dog' }));
+        actions$ = of(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll:false}));
+        effect.decideToSearchAtStart$.subscribe((result) => {
+          expect(result).toEqual(MemeActions.MEME_SEARCH_START());
+        });
+      });
+
+      it('Check if store has no search term but no memes, send action to clear/search', () => {
+        store.select.and.returnValue(of({ total: 0, term: '' }));
+        actions$ = of(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll:false}));
+        effect.decideToSearchAtStart$.subscribe((result) => {
+          expect(result).toEqual(MemeActions.MEME_TRENDING_START());
+        });
+      });
+
+      it('Check if store has no search term but memes, get more trending', () => {
+        store.select.and.returnValue(of({ total: 1, term: '' }));
+        actions$ = of(MemeActions.MEME_DECIDE_TO_SEARCH({isScroll:true}));
+        effect.decideToSearchAtStart$.subscribe((result) => {          
+          expect(result).toEqual(MemeActions.MEME_TRENDING_START());
+        });
+      });      
+    });
   });
 
 });

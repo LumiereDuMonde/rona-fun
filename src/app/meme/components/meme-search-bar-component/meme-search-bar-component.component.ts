@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class MemeSearchBarComponentComponent implements OnInit {
 
-  searchTerm: string;
+  @Input() searchTerm: string;
   @Output() doSearch = new EventEmitter<string>();
 
   constructor() { }
