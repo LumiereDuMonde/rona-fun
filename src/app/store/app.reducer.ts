@@ -1,10 +1,14 @@
-import { Action, ActionReducer, ActionReducerMap, createFeatureSelector, MetaReducer } from '@ngrx/store';
+import { Action, ActionReducer, ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 import { InjectionToken } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import * as fromUI from './UI.reducer';
+
+export const uiFeatureKey = 'UI';
 
 export interface State {
     router: fromRouter.RouterReducerState<any>;
+    [uiFeatureKey]: fromUI.State;
 }
 
  export const ROOT_REDUCERS = new InjectionToken<
@@ -12,6 +16,7 @@ export interface State {
 >('Root reducers token', {
  factory: () => ({   
    router: fromRouter.routerReducer,
+   [uiFeatureKey]: fromUI.reducer
  }),
 });
 
@@ -65,3 +70,13 @@ export const {
   selectRouteData, // select the current route data
   selectUrl, // select the current url
 } = fromRouter.getSelectors(selectRouter);
+
+/*
+ UI selectors
+*/
+export const selectUIState = createFeatureSelector<
+ State,
+ fromUI.State
+>(uiFeatureKey);
+
+export const selectSideNavToggle = createSelector(selectUIState,fromUI.getsideNavToggle);

@@ -21,8 +21,9 @@ import { ReactiveComponentModule } from '@ngrx/component';
 import { ImagePreloader } from './imagepreloader.directive';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import {A11yModule} from '@angular/cdk/a11y';
-
+import { A11yModule } from '@angular/cdk/a11y';
+import { MatMenuModule } from '@angular/material/menu';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,9 @@ import {A11yModule} from '@angular/cdk/a11y';
     ScrollingModule,
     ReactiveComponentModule,
     MatSelectModule,
-    A11yModule
+    A11yModule,
+    MatMenuModule,
+    MatDividerModule
   ]
 })
 export class CoreModule { }

@@ -1,13 +1,13 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthService } from './auth/auth.service';
 import * as AuthActions from './auth/actions/auth.actions';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Observable } from 'rxjs';
-import * as fromMeme from './meme/reducers';
+import { Observable, Subscription } from 'rxjs';
+import * as UIActions from './store/actions/ui.actions';
+
 import * as fromApp from './store/app.reducer';
-import { Data } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +15,13 @@ import { Data } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnDestroy, OnInit { 
+export class AppComponent implements OnDestroy, OnInit, AfterViewInit { 
   mobileQuery: MediaQueryList;
   title = 'Rona fun';
-  $favorites: Observable<number>;
-  $route: Observable<string>;
+  
+  route$: Observable<string>;
+  @ViewChild('sideNav') snav: MatSidenav;
+  subscription: Subscription;
 
 
   private _mobileQueryListener: () => void;
@@ -33,19 +35,30 @@ export class AppComponent implements OnDestroy, OnInit {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
+  ngAfterViewInit(): void {
+    
+    this.subscription = this.store.select(fromApp.selectSideNavToggle).subscribe((setOpen) => {
+      this.snav.opened = setOpen;
+    });
+  }
+
   ngOnInit(): void {
-    this.store.dispatch(AuthActions.AUTOLOGIN_START());
-    this.$favorites = this.store.select(fromMeme.selectFavoritesTotal);
-    this.$route = this.store.select(fromApp.selectUrl);    
+    this.store.dispatch(AuthActions.AUTOLOGIN_START());    
+    this.route$ = this.store.select(fromApp.selectUrl);    
+
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.subscription?.unsubscribe();
   }
 
-  logout(sideNav: MatSidenav) {
-    sideNav.toggle();
+  logout() {    
     this.authService.logout();    
+  }
+
+  toggle() {
+    this.store.dispatch(UIActions.TOGGLE_SIDE_NAV());
   }
 
 }

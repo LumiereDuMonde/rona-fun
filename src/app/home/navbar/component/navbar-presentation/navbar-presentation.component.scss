@@ -1,0 +1,56 @@
+.rona-toolbar {
+
+    .bookmark-btn {
+        margin-left: auto;
+        padding: 0;
+        &.mat-button-disabled{
+            background-color: rgba(0,0,0,0);
+        }        
+    }
+
+    .logo {
+        color: gold;
+        font-size: 2rem;
+        height: auto;
+        width: auto;
+    }
+
+    .bookmark {
+        color: darkgrey;
+        opacity: 1;
+        
+    } 
+
+    .rona-is-mobile {
+        position: fixed;
+        /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+        z-index: 2;
+    }
+
+    mat-icon {
+        opacity: 0.5;
+    }
+
+    h1.rona-app-name {
+        margin-left: 16px;
+    }
+
+}
+
+.bookmark-menu {
+    mat-divider {
+        margin: 0.25rem 0;
+    }
+
+    > span {
+        padding: 0 0.5rem;
+        opacity: 0.5;
+        font-weight: 200;
+    }
+    button {
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+}

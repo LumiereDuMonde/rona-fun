@@ -7,37 +7,7 @@
   left: 0;
   right: 0;
 
-  mat-icon {
-    opacity: 0.5;
-    margin-right: 0.5em;
 
-  }
-
-
-
-  .rona-toolbar {
-    .logo {
-      color: gold;
-      font-size: 2rem;
-      height: auto;
-      width: auto;
-      padding-left: 0.5rem;
-    }
-
-    .bookmark {
-      margin-left: auto;
-      color: darkgrey;
-      opacity: 1;
-    }
-
-
-
-    .rona-is-mobile {
-      position: fixed;
-      /* Make sure the toolbar will stay on top of the content as it scrolls past. */
-      z-index: 2;
-    }
-  }
 
   .mat-drawer {
     min-width: 225px;
@@ -47,6 +17,12 @@
     /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
          causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
     flex: 1;
+
+    .mat-list-item {
+      mat-icon {
+        margin-right: 0.5rem;
+      }
+    }
 
     .mat-drawer-content__remove-scrollbar {
       overflow-y: hidden;
@@ -62,10 +38,4 @@
       background: #ccc;
     }
   }
-}
-
-
-
-h1.rona-app-name {
-  margin-left: 8px;
 }
