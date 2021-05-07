@@ -1,6 +1,10 @@
 export const environment = {
   production: true,
+<<<<<<< HEAD
   nationalAPIURL: 'assets/us.json',
+=======
+  nationalAPIURL: 'assets/us.json', 
+>>>>>>> Navbar
   signInURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBJqVnwW4N_lXqqpEEMTCXjvcXmzJTSNPE',
   API_KEY: 'AIzaSyBJqVnwW4N_lXqqpEEMTCXjvcXmzJTSNPE',
   GIPHY_API_KEY: '8fKQgxFhleNT0glKiICA1QzAgU77B94x',

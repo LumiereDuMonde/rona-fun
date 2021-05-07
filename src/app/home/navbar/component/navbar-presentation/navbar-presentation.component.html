@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="rona-toolbar">
+  <button mat-icon-button onclick="this.blur()" (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <button class="bookmark-btn" mat-flat-button [matMenuTriggerFor]="menu" color="primary"
+    aria-label="Example icon-button with a menu" [disabled]="favorites.length === 0">
+    <mat-icon class="bookmark" [matBadge]="favorites.length" matBadgeColor="warn">bookmark</mat-icon>
+    <mat-icon>arrow_drop_down</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <div class="bookmark-menu">
+      <span>Click to copy to clipboard</span>
+      <mat-divider></mat-divider>
+      <button mat-menu-item md-fab class="image" *ngFor="let favorite of favorites"
+        (click)="copyToClipBoard(favorite?.url)" [style.backgroundImage]="'url('+favorite.images.preview_gif.url+')'">
+      </button>
+    </div>
+  </mat-menu>
+  <mat-icon class="logo">construction</mat-icon>
+  <h1 class="rona-app-name">Rona Fun</h1>
+</mat-toolbar>

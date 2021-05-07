@@ -54,7 +54,7 @@
     &__item {
         background-color: #ccc;
     }
-
+    
     .mdc-image-list__item {
         width: 250px;
         height: 250px;
@@ -71,7 +71,7 @@
 
     .mdc-image-list__supporting {
         justify-content: start;
-
+        user-select: none;
         .mdc-image-list__label {
             padding-right: 1rem;
 

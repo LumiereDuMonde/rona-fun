@@ -17,11 +17,15 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { MemeModule } from './meme/meme.module';
+import { NavbarContainerComponent } from './home/navbar/container/navbar-container/navbar-container.component';
+import { NavbarPresentationComponent } from './home/navbar/component/navbar-presentation/navbar-presentation.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,    
+    NavbarContainerComponent,
+    NavbarPresentationComponent
   ],
   imports: [
     BrowserModule,

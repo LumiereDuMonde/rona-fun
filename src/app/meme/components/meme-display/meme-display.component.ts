@@ -27,7 +27,7 @@ export class MemeDisplayComponent implements OnInit  {
     this.favoriteClicked.emit({meme, is_favorite: this.isInFavorites(meme.id)});
   }
 
-  scrolled()   {    
+  scrolled()   {        
     this.fetchMore.emit();   
   }
 

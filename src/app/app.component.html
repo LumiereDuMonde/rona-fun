@@ -1,22 +1,17 @@
 <div class="rona-container" [class.rona-is-mobile]="mobileQuery.matches">
-    <mat-toolbar color="primary" class="rona-toolbar">
-      <button mat-icon-button onclick="this.blur()" (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-      <mat-icon class="bookmark" [matBadge]="$favorites | ngrxPush" matBadgeColor="warn" >bookmark</mat-icon>
-      <mat-icon class="logo">construction</mat-icon><h1 class="rona-app-name">Rona Fun</h1>
-    </mat-toolbar>
-    <mat-sidenav-container class="rona-sidenav-container"
-                           >
-      <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'over'"
+    <app-navbar-container></app-navbar-container>
+    <mat-sidenav-container class="rona-sidenav-container">
+      <mat-sidenav #sideNav [mode]="mobileQuery.matches ? 'over' : 'over'"
                    [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" id="sidenav">
         <mat-nav-list>
-          <a mat-list-item [routerLink]="['/charting']" (click)="snav.close()" routerLinkActive="link-active"><mat-icon>leaderboard</mat-icon> Charts</a>
-          <a mat-list-item [routerLink]="['/meme']" (click)="snav.close()" routerLinkActive="link-active"><mat-icon>image</mat-icon> Image Search</a>
-          <a mat-list-item [routerLink]="['/panel']" (click)="snav.close()" routerLinkActive="link-active"><mat-icon>speed</mat-icon> Instruments</a>
+          <a mat-list-item [routerLink]="['/charting']" (click)="toggle()" routerLinkActive="link-active"><mat-icon>leaderboard</mat-icon> Charts</a>
+          <a mat-list-item [routerLink]="['/meme']" (click)="toggle()" routerLinkActive="link-active"><mat-icon>image</mat-icon> Image Search</a>
+          <a mat-list-item [routerLink]="['/panel']" (click)="toggle()" routerLinkActive="link-active"><mat-icon>speed</mat-icon> Instruments</a>
           <mat-divider></mat-divider> 
-          <a mat-list-item (click)="logout(snav)"><mat-icon>logout</mat-icon> Logout</a>
+          <a mat-list-item (click)="logout()"><mat-icon>logout</mat-icon> Logout</a>
         </mat-nav-list>
       </mat-sidenav>
-      <mat-sidenav-content [class.mat-drawer-content__remove-scrollbar]="($route | ngrxPush) === '/meme'">
+      <mat-sidenav-content [class.mat-drawer-content__remove-scrollbar]="(route$ | ngrxPush) === '/meme'">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
