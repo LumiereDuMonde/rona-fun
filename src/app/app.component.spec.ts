@@ -69,7 +69,7 @@ describe('AppComponent', () => {
       const sidenav = jasmine.createSpyObj('MatSidenav',['toggle']);
       sidenav.toggle.and.returnValue(true);
       auth.logout.and.callThrough();      
-      component.logout(sidenav);
+      component.logout();
       expect(auth.logout).toHaveBeenCalled();
       expect(sidenav.toggle).toHaveBeenCalled();
     });

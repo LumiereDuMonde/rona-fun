@@ -1,6 +1,9 @@
 import * as fromReducer from './index'
 describe('Instrument Feature', () => {
     const state = {
+        UI: {
+          sideNavToggle: false
+        },
         router: {
             state: {
               root: {

@@ -2,6 +2,9 @@ import * as fromReducer from './index'
 
 describe('Meme Feature Key', () => {
     const state = {
+        UI: {
+            sideNavToggle: false
+        },
         router: {
             state: {
                 root: {

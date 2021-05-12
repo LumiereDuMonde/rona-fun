@@ -25,7 +25,7 @@ describe('ChartingService', () => {
     service.getNationalCovidData().subscribe(res => {
       expect(res).toEqual('[{}]');
     });
-    const req = httpTestingController.expectOne('https://api.covidtracking.com/v1/us/daily.json');
+    const req = httpTestingController.expectOne('assets/us.json');
     expect(req.request.method).toEqual('GET');
     req.flush('[{}]');
   });
@@ -34,7 +34,7 @@ describe('ChartingService', () => {
     service.getStateCovidData('ca').subscribe(res => {
       expect(res).toEqual('[{}]');
     });
-    const req = httpTestingController.expectOne('https://api.covidtracking.com/v1/states/ca/daily.json');
+    const req = httpTestingController.expectOne('assets/ca.json');
     expect(req.request.method).toEqual('GET');
     req.flush('[{}]');
   });
@@ -43,7 +43,7 @@ describe('ChartingService', () => {
     service.getCovidTrackingData('us').subscribe(res => {
       expect(res).toEqual('[{}]');
     });
-    const req = httpTestingController.expectOne('https://api.covidtracking.com/v1/us/daily.json');
+    const req = httpTestingController.expectOne('assets/us.json');
     expect(req.request.method).toEqual('GET');
     req.flush('[{}]');
   });
@@ -52,7 +52,7 @@ describe('ChartingService', () => {
     service.getCovidTrackingData('ca').subscribe(res => {
       expect(res).toEqual('[{}]');
     });
-    const req = httpTestingController.expectOne('https://api.covidtracking.com/v1/states/ca/daily.json');
+    const req = httpTestingController.expectOne('assets/ca.json');
     expect(req.request.method).toEqual('GET');
     req.flush('[{}]');
   });
