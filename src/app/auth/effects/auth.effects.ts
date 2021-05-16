@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
 import { LoginUser } from '../models/LoginUser.model';
 import * as AuthActions from '../actions/auth.actions';
+import { Store } from '@ngrx/store';
+import * as fromAuth from '../reducers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthEffects {
-  constructor(private actions$: Actions, private authService: AuthService, private router: Router) { }
+  constructor(private actions$: Actions, 
+    private authService: AuthService, 
+    private router: Router,
+    private store: Store
+    ) { }
 
   startLogin$ = createEffect(() => this.actions$.pipe(
     // only continue in this observable chain if of the type
@@ -38,7 +44,10 @@ export class AuthEffects {
 
   loginSuccess$ = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.LOGIN_SUCCESS),
-    tap(() => this.router.navigate(['/']))
+    concatLatestFrom(() => this.store.select(fromAuth.selectRedirectUrl)),
+    tap(([action,url]) => {
+      this.router.navigate([ !!url ? url : '/'])
+    })
   ), { dispatch: false });
 
   notLoggedIn$ = createEffect(() => this.actions$.pipe(

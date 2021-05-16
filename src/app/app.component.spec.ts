@@ -1,16 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthService } from './auth/auth.service';
-import { MatSidenav } from '@angular/material/sidenav';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
+
+
+
 class MockAuthComponent { }
+
+@Component({selector: 'app-navbar-container', template: ''})
+class NavbarStubComponent {
+}
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -18,6 +24,7 @@ describe('AppComponent', () => {
   let store: any;
   let media: any;
   let auth: any;
+  let navbar: any;
   beforeEach(() => {    
     media = jasmine.createSpyObj('MediaMatcher', ['matchMedia']);
     media.matchMedia.and.returnValue({
@@ -29,10 +36,10 @@ describe('AppComponent', () => {
     store = jasmine.createSpyObj('Store',['dispatch','select']);
     auth = jasmine.createSpyObj('AuthService',['logout']);
     TestBed.configureTestingModule({      
-      declarations: [AppComponent],
+      declarations: [AppComponent, NavbarStubComponent],
       imports: [
         CoreModule,
-        BrowserAnimationsModule,
+        BrowserAnimationsModule,        
         RouterTestingModule.withRoutes([
           {
               path: 'auth',
@@ -66,12 +73,9 @@ describe('AppComponent', () => {
 
   describe('Methods', () => {
     it('logout makes expected calls', () => {
-      const sidenav = jasmine.createSpyObj('MatSidenav',['toggle']);
-      sidenav.toggle.and.returnValue(true);
       auth.logout.and.callThrough();      
       component.logout();
-      expect(auth.logout).toHaveBeenCalled();
-      expect(sidenav.toggle).toHaveBeenCalled();
+      expect(auth.logout).toHaveBeenCalled();      
     });
 
     it('ngOnInit makes expected calls', () => {      

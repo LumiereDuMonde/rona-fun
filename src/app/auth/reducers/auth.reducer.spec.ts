@@ -23,7 +23,8 @@ describe('Auth slice of the Auth Reducer', () => {
                 user: null,
                 loading: true,
                 loggedIn: false,
-                errorMsg: null
+                errorMsg: null,
+                redirectUrl: null
             };
             const action = AuthActions.SIGNUP_START({signup: new LoginUser('user@user.com', 'password')});
             const state = fromReducer.reducer(initialState, action);
@@ -38,7 +39,8 @@ describe('Auth slice of the Auth Reducer', () => {
                 user: null,
                 loading: true,
                 loggedIn: false,
-                errorMsg: null
+                errorMsg: null,
+                redirectUrl: null
             };
             const action = AuthActions.LOGIN_START({signup: new LoginUser('user@user.com', 'password')});
             const state = fromReducer.reducer(initialState, action);
@@ -55,7 +57,8 @@ describe('Auth slice of the Auth Reducer', () => {
                 user: user,
                 loading: false,
                 loggedIn: true,
-                errorMsg: null
+                errorMsg: null,
+                redirectUrl: null
             };
             const action = AuthActions.LOGIN_SUCCESS({ user });
             const state = fromReducer.reducer(initialState, action);
@@ -71,7 +74,8 @@ describe('Auth slice of the Auth Reducer', () => {
                 user: user,
                 loading: false,
                 loggedIn: true,
-                errorMsg: null
+                errorMsg: null,
+                redirectUrl: null
             };
             const action = AuthActions.AUTOLOGIN_SUCCESS({ user });
             const state = fromReducer.reducer(initialState, action);
@@ -86,7 +90,8 @@ describe('Auth slice of the Auth Reducer', () => {
                 user: null,
                 loading: true,
                 loggedIn: false,
-                errorMsg: null
+                errorMsg: null,
+                redirectUrl: null
             };
             const action = AuthActions.LOGOUT();
             const state = fromReducer.reducer(PreviousState, action);
@@ -100,13 +105,15 @@ describe('Auth slice of the Auth Reducer', () => {
                 user: null,
                 loading: true,
                 loggedIn: false,
-                errorMsg: null
+                errorMsg: null,
+                redirectUrl: null
             };
             const newState = {
                 user: null,
                 loading: false,
                 loggedIn: false,
-                errorMsg: 'Test'
+                errorMsg: 'Test',
+                redirectUrl: null
             };
             const action = AuthActions.LOGIN_FAILURE({error: 'Test'});
             const state = fromReducer.reducer(initialState, action);
@@ -126,7 +133,8 @@ describe('Auth slice of the Auth Reducer', () => {
                 user: user,
                 loading: false,
                 loggedIn: true,
-                errorMsg: 'error'
+                errorMsg: 'error',
+                redirectUrl: '/trading'                
             };            
         });
         
@@ -144,7 +152,12 @@ describe('Auth slice of the Auth Reducer', () => {
         
         it('getError', () => {
             expect(fromReducer.getError(state)).toBe('error');
-        });        
+        });  
+        
+        it('getRedirectUrl', () => {
+            expect(fromReducer.getRedirectUrl(state)).toBe('/trading');
+        });  
+
     });
     
 });

@@ -43,4 +43,4 @@ export const LOGOUT = createAction(
     namespace + 'Logout'    
 );
 
-export const NOT_LOGGED_IN = createAction(namespace + 'Not Logged In');
+export const NOT_LOGGED_IN = createAction(namespace + 'Not Logged In', props<{url: string}>());

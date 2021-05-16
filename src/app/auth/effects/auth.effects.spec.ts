@@ -3,7 +3,7 @@ import { AuthService } from '../auth.service';
 import { AuthEffects } from './auth.effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable, of, throwError } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginUser } from '../models/LoginUser.model';
 import { User } from 'src/app/models/user.model';
@@ -16,10 +16,13 @@ describe('AuthEffects', () => {
   let authService: any;
   let user: User;
   let router: Router;
+  let store: any
 
   beforeEach(() => {   
     user = new User('user@user.com', '1', 'token', new Date('1/1/2031')); 
-    authService = jasmine.createSpyObj('AuthService', ['handleAuthentication', 'login', 'handleError', 'autoLogin']);  
+    authService = jasmine.createSpyObj('AuthService', ['handleAuthentication', 'login', 'handleError', 'autoLogin']); 
+    store = jasmine.createSpyObj('Store',['select']);
+    store.select.and.returnValue(of('/trading'));
     
     authService.handleAuthentication.and.returnValue(user);
     authService.handleError.and.returnValue('Error is here');
@@ -30,7 +33,8 @@ describe('AuthEffects', () => {
       providers: [
         AuthEffects,        
         provideMockActions(() => actions$),
-        { provide: AuthService, useValue: authService }
+        { provide: AuthService, useValue: authService },
+        {provide: Store, useValue: store }
       ]
     });
     service = TestBed.inject(AuthEffects);
@@ -67,16 +71,16 @@ describe('AuthEffects', () => {
     });
   });
   
-  it('LOGIN_SUCCESS navigates to root', () => {
+  it('LOGIN_SUCCESS navigates to trading page', () => {
     actions$ = of(AuthActions.LOGIN_SUCCESS({user}));    
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');      
     service.loginSuccess$.subscribe();
-    expect(router.navigate).toHaveBeenCalledWith(['/']);    
+    expect(router.navigate).toHaveBeenCalledWith(['/trading']);    
   });
     
   it('NOT_LOGGED_IN navigates to login page', () => {
-    actions$ = of(AuthActions.NOT_LOGGED_IN());    
+    actions$ = of(AuthActions.NOT_LOGGED_IN({ url: '/charting'}));    
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');    
     service.notLoggedIn$.subscribe();

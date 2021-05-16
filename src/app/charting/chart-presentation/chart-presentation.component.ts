@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ChartDataSets } from 'chart.js';
-import { BaseChartDirective, Color } from 'ng2-charts';
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { BaseChartDirective, Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
 import * as moment from 'moment/moment';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ViewChild } from '@angular/core';
@@ -13,7 +13,7 @@ import { ViewChild } from '@angular/core';
 })
 export class ChartPresentationComponent implements OnInit, OnDestroy {
   @Input() chartdata: ChartDataSets[];
-  @Input() chartLabels: moment.Moment[];
+  @Input() chartLabels: string[]; //moment.Moment[];
   @Input() chartTitle: string = '';
   @Input() lineChartColors: Color[];
   @Input() loading: boolean;
@@ -23,11 +23,8 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
     { data: [], label: 'Infections' },
   ];
   yAxes = true;
-  lineChartOptions = {
-    responsive: true,
-    ticks: {
-      min: 0
-    },
+  lineChartOptions: ChartOptions = {
+    responsive: true,    
     title: {
       display: false,
       text: ''
@@ -47,6 +44,9 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
         id: 'left-axis',
         display: this.yAxes,
         position: 'left',
+        ticks: {
+          min: 0
+        },
       }, {
         type: 'linear',
         id: 'right-axis',
@@ -64,6 +64,9 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
         radius: 1,
         hitRadius: 4
       }
+    },
+    plugins: {
+      streaming: false // needed to disable streaming from streaming plugin
     }
   };
 
@@ -71,7 +74,6 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
   myChart: BaseChartDirective;
 
   lineChartLegend = true;
-  lineChartPlugins = [];
   lineChartType = 'line';
 
 

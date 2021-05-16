@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgxGaugeCap, NgxGaugeType } from 'ngx-gauge/gauge/gauge';
 
 @Component({
   selector: 'app-gauge',
@@ -14,8 +15,8 @@ export class GaugeComponent implements OnInit {
   @Input() value = 0
   @Input() unit = '';
   @Input() threshold = {};
-  @Input() type = 'arch';
-  cap = 'round';
+  @Input() type:NgxGaugeType  = 'arch';
+  cap: NgxGaugeCap = 'round';
   thick = 9;
   backgroundColor = 'white';
 

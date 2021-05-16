@@ -108,7 +108,8 @@ const initialState = {
             user: null,
             loading: false,
             loggedIn: false,
-            errorMsg: null
+            errorMsg: null,
+            redirectUrl: '/trading'
         }
     },
     meme: {
@@ -175,5 +176,10 @@ describe('Auth Feature Selectors', () => {
         const result = fromAuth.selectAuthUser.projector(initialState.auth.authState);
         expect(result).toBe(null);
     });
+
+    it('should select redirectUrl', () => {
+        const result = fromAuth.selectRedirectUrl.projector(initialState.auth.authState);
+        expect(result).toBe('/trading');
+    });    
 
 });

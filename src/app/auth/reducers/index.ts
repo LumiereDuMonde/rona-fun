@@ -57,3 +57,8 @@ export const selectAuthState = createSelector(
     selectAuthState,
     fromAuth.getUser
   ); 
+
+  export const selectRedirectUrl = createSelector(
+    selectAuthState,
+    fromAuth.getRedirectUrl
+  ); 

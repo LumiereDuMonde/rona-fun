@@ -21,7 +21,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             if(isLoggedIn){
                 return true;
             } else {
-                this.store.dispatch(AuthActions.NOT_LOGGED_IN());
+                console.log(`Not logged in ${state.url}`);
+                this.store.dispatch(AuthActions.NOT_LOGGED_IN({url: state.url}));
                 return false;
             }            
         }),
