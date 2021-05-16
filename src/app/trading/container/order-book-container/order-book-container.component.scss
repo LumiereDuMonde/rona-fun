@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+app-order-book {
+    padding: 0 1rem;
+}
+
+@media screen and (min-width: 1200px) {
+    :host {
+        flex-direction: row;
+    }
+}

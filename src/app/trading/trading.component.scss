@@ -2,14 +2,11 @@
     background: rgb(0,0,0);   
     display: flex;
     justify-content: stretch;
-    width: 100%; 
-    /* min-width: 100%; */
+    width: 100%;     
     flex-direction: column;
     min-height: 100%;   
     padding-bottom: 1rem;     
 }
-
-
 
 .trading-section {
         
@@ -18,7 +15,7 @@
     align-items: center;
     justify-content: space-around;    
 
-    app-trade-chart {
+    app-trade-chart-container {
         width: 80%;    
         min-height: 15rem;
         display: flex;
@@ -41,10 +38,10 @@
         align-items: flex-start;
         flex-wrap: wrap;
         justify-content: center;
-        app-trade-chart {
+        app-trade-chart-container {
             width: 45%;            
         }
-        app-order-book{
+        app-order-book-container {            
             padding-left: 1rem;
         }
     }
