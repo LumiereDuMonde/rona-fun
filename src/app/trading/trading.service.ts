@@ -59,8 +59,7 @@ export class TradingService {
     this.socket$ = undefined;
   }
 
-  sendMessage(msg: any) {
-    console.log('sendMessage');
+  sendMessage(msg: any) {    
     this.socket$.next(msg);
   }
 
@@ -72,12 +71,12 @@ export class TradingService {
       url: WS_ENDPOINT,
       openObserver: {
         next: () => {
-          console.log('[TradingService]: connection ok');
+//          console.log('[TradingService]: connection ok');
         }
       },
       closeObserver: {
         next: () => {
-          console.log('[TradingService]: connection closed');
+          //console.log('[TradingService]: connection closed');
           this.socket$?.complete();
           this.socket$ = undefined;
           this.tradeStarted = false;

@@ -14,18 +14,7 @@ export interface State {
     error: string;
 };
 
-const bookInitialValues = [
-    [0,0,0],
-    [0,0,0],
-    [0,0,0],
-    [0,0,0],
-    [0,0,0],
-    [0,0,0],
-    [0,0,0],
-    [0,0,0],
-    [0,0,0],
-    [0,0,0]
-];
+const bookInitialValues = Array.from({length: 10}, _ => new Array(3).fill(0));
 
 const initialState: State = {
     connected: TradeState.DISCONNECTED,

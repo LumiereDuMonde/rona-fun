@@ -20,8 +20,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         map((isLoggedIn) => {
             if(isLoggedIn){
                 return true;
-            } else {
-                console.log(`Not logged in ${state.url}`);
+            } else {                
                 this.store.dispatch(AuthActions.NOT_LOGGED_IN({url: state.url}));
                 return false;
             }            

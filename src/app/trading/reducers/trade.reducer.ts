@@ -37,7 +37,7 @@ const tradeReducer = createReducer(
     ),
     on(
         TradeActions.TRADE_PAYLOAD,
-        (state, action) => ({...state, lastTrade: [...action.trades]})  
+        (state, action) => ({...state, lastTrade: [...action.trades], trades: [...state.trades, ...action.trades]})  
     )
 );
 

@@ -19,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
 import { MemeModule } from './meme/meme.module';
 import { NavbarContainerComponent } from './home/navbar/container/navbar-container/navbar-container.component';
 import { NavbarPresentationComponent } from './home/navbar/component/navbar-presentation/navbar-presentation.component';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -44,10 +45,9 @@ import { NavbarPresentationComponent } from './home/navbar/component/navbar-pres
     }),
     EffectsModule.forRoot([ChartingEffects]),
     StoreRouterConnectingModule.forRoot(),
-    StoreDevtoolsModule.instrument({
-      name: 'NgRx Charting',
-      // logOnly: environment.production,
-    }),
+    !environment.production ? StoreDevtoolsModule.instrument({
+      name: 'NgRx Charting',      
+    }) : [],
     ChartsModule,
     CoreModule,
     AuthModule,
