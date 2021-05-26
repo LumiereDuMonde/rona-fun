@@ -55,7 +55,7 @@ export class TradingService {
   }
 
   close() {
-    this.socket$.complete();
+    this.socket$?.complete();
     this.socket$ = undefined;
   }
 
@@ -71,19 +71,18 @@ export class TradingService {
       url: WS_ENDPOINT,
       openObserver: {
         next: () => {
-//          console.log('[TradingService]: connection ok');
+
         }
       },
       closeObserver: {
-        next: () => {
-          //console.log('[TradingService]: connection closed');
+        next: () => {          
           this.socket$?.complete();
           this.socket$ = undefined;
           this.tradeStarted = false;
           this.bookStarted = false;
-          this.store.dispatch(TradeActions.TRADE_ENDED());
-          this.store.dispatch(BookActions.BOOK_ENDED());
-         // this.connect({ reconnect: true });
+          // this.store.dispatch(TradeActions.TRADE_ENDED());
+          // this.store.dispatch(BookActions.BOOK_ENDED());
+          this.connect({ reconnect: true });
         }
       },      
     });

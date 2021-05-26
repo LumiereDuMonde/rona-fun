@@ -1,5 +1,5 @@
 .search-bar {
-    margin: auto;
+    margin: 64px auto auto auto;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -7,7 +7,6 @@
     align-items: center;
     flex-direction: row;
     justify-content: center;
-
     mat-icon {
         cursor: pointer;
         float: right;
@@ -17,8 +16,13 @@
     }
 
     mat-form-field {
-        width: 30%;
+        width: 90%;
         padding-left: 0.5rem;
+
+        @media screen and (min-width: 900px) {
+            width: 50%;
+            max-width: 700px;
+        }
     }
 
 }

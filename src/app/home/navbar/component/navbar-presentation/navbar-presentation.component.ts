@@ -12,6 +12,10 @@ export class NavbarPresentationComponent implements OnInit {
 
   @Input() favorites: GIF[];
   @Output() toggle = new EventEmitter<void>();
+  @Output() logout = new EventEmitter<void>();
+  @Input() url: string;
+  @Input() loggedIn: boolean;
+  secondaryColor: boolean = false;
 
   constructor(private _clipboard: Clipboard, private _snackBar: MatSnackBar) { }
 
@@ -25,7 +29,10 @@ export class NavbarPresentationComponent implements OnInit {
   copyToClipBoard(val: string) {
     this._clipboard.copy(val);
     this._snackBar.open('Meme Copied!', 'Dismiss', { duration: 2000});
+  }   
+
+  isSecondary() {
+    return this.url?.toLowerCase() === '/trading' || this.url?.toLowerCase() ==='/instruments';
   }
-    
 
 }

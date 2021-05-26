@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
 import { MemeComponent } from './meme.component';
 import { MemeSearchBarContainerComponent } from './containers/meme-search-bar-container/meme-search-bar-container.component';
 import { MemeSearchBarComponentComponent } from './components/meme-search-bar-component/meme-search-bar-component.component';

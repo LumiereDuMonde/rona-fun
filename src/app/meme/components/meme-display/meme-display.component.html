@@ -1,7 +1,9 @@
-<div class="frame" (scrolled)="scrolled()" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" [scrollWindow]="false" >
-     <ul class="mdc-image-list mdc-image-list mdc-image-list--with-text-protection my-image-list">
-        <li class="mdc-image-list__item" *ngFor="let item of memes; let index=index;">            
-            <img class="mdc-image-list__image cover" id="image{{index}}" [img-preloader]="item.images?.fixed_width?.url">            
+<div class="frame" (scrolled)="scrolled()" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200"
+    [scrollWindow]="false">
+    <ul class="mdc-image-list mdc-image-list--masonry mdc-image-list--with-text-protection my-image-list">
+        <li class="mdc-image-list__item" *ngFor="let item of memes; let index=index;">
+            <img #memeImage class="mdc-image-list__image cover" id="image{{index}}"
+                [img-preloader]="item.images?.fixed_width_downsampled?.url">
             <div class="mdc-image-list__supporting">
                 <span class="mdc-image-list__label" (click)="toggleFavorite(item)">
                     <mat-icon id="favorite{{index}}" [class.selected]="isInFavorites(item.id)">
@@ -15,7 +17,7 @@
                 </span>
             </div>
         </li>
-    </ul> 
+    </ul>
     <div class="loading-spinner" *ngIf="loading">
         <mat-spinner></mat-spinner>
     </div>

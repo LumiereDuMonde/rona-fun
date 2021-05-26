@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-meme-search-bar-container',
-  templateUrl: './meme-search-bar-container.component.html'
+  templateUrl: './meme-search-bar-container.component.html'  
 })
 export class MemeSearchBarContainerComponent implements OnInit {
 

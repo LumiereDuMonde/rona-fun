@@ -23,7 +23,7 @@ export class ImagePreloader implements OnInit {
   ngOnInit() {
     //First set the final image to some default image while we prepare our preloader:
     this.finalImage = this.defaultImage;
-
+    if (!this.targetSource) return;
     this.downloadingImage = new Image();  // create image object
     this.downloadingImage.onload = () => { //Once image is completed, console.log confirmation and switch our host attribute      
       this.finalImage = this.targetSource;  //do the switch 😀

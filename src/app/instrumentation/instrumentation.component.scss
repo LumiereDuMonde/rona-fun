@@ -1,22 +1,21 @@
 app-panel-container {
-    display: flex;    
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: rgb(11, 44, 53);
-    color: white;        
+    color: white;
     position: relative;
-    width: 100%; 
+    width: 100%;
     flex: 1;
+    margin-top: 64px;
 }
 
 :host {
+    background: url('../../assets/img/road.jpg') center center / cover no-repeat;
     display: flex;
     justify-content: stretch;
-    width: 100%; 
-    /* min-width: 100%; */
+    width: 100%;    
     flex-direction: column;
     min-height: 100%;
-    align-items: center;    
+    align-items: center;
 }
-
