@@ -7,12 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trading.component.scss']
 })
 export class TradingComponent implements OnInit {      
+  
+  constructor() {}
 
-
-  constructor() { }
-
-  ngOnInit(): void {
-            
-  }
+  ngOnInit(): void {}
 
 }

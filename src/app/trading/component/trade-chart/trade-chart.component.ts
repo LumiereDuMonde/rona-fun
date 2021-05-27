@@ -13,7 +13,7 @@ import { ITrade } from '../../models/trade.model';
 })
 export class TradeChartComponent implements AfterViewInit, OnDestroy {
   @Input() trades: Observable<ITrade[]>;
-  lastTrade: ITrade[];
+  lastTrade: ITrade[]= [];
   subscription: Subscription;
 
   @ViewChild('tradeChart')
@@ -107,8 +107,9 @@ export class TradeChartComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.subscription = this.trades.subscribe((trades) => {
-      this.lastTrade = [...trades];
+      if (!trades) return;
 
+      this.lastTrade = [...trades]; 
       trades.forEach((value, index) => {
         //price
         (this.datasets[0].data as ChartPoint[]).push({
@@ -125,6 +126,7 @@ export class TradeChartComponent implements AfterViewInit, OnDestroy {
         } else {
           this.datasets[1].data[this.datasets[1].data.length - 1].y += +value.volume;
         }
+        
       });
       // append the new data to the existing chart data              
       this.tradeChart.update('none');

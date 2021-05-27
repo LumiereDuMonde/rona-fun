@@ -22,7 +22,7 @@ export class TradingService {
   private messagesSubject$ = new BehaviorSubject(null);
   public messages$ = this.messagesSubject$.pipe(switchAll(), catchError(e => { throw e }));
   public data$;
-  private subscription: Subscription = null;
+  public subscription: Subscription = null;
   private bookStarted = false;
   private tradeStarted = false;
   
@@ -80,9 +80,9 @@ export class TradingService {
           this.socket$ = undefined;
           this.tradeStarted = false;
           this.bookStarted = false;
-          // this.store.dispatch(TradeActions.TRADE_ENDED());
-          // this.store.dispatch(BookActions.BOOK_ENDED());
-          this.connect({ reconnect: true });
+          this.store.dispatch(TradeActions.TRADE_ENDED());
+          this.store.dispatch(BookActions.BOOK_ENDED());
+          //this.connect({ reconnect: true });
         }
       },      
     });
