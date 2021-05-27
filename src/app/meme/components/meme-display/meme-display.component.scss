@@ -54,24 +54,28 @@
     &__item {
         background-color: #ccc;
     }
-    
-    .mdc-image-list__item {
-        width: 250px;
-        height: 250px;
 
+
+    img[src="assets/preloader.gif"] {
+        display: none;
+    }
+
+    .mdc-image-list__item {      
+        
         img {
             height: 100%;
-            max-width: 100%;
-
+            max-width: 100%;                    
             &.cover {
                 object-fit: fill;
             }
-        }
+        }        
+        overflow: hidden;
+        box-shadow: 2px 2px 2px rgba(204, 198, 198, 0.5);
     }
 
     .mdc-image-list__supporting {
         justify-content: start;
-        user-select: none;
+        user-select: none;        
         .mdc-image-list__label {
             padding-right: 1rem;
 

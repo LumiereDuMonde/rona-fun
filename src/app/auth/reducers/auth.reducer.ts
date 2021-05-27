@@ -7,13 +7,15 @@ export interface State {
     loading: boolean; 
     loggedIn: boolean;
     errorMsg: string;
+    redirectUrl: string;
 };
 
 export const initialState: State = {
     user: null,
     loading: false,
     loggedIn: false,
-    errorMsg: null
+    errorMsg: null,
+    redirectUrl: null
 };
 
 export const authStateFeatureKey = 'authState'; 
@@ -22,6 +24,7 @@ export const getUser = (state: State) => state.user;
 export const getLoggedIn = (state: State) => state.loggedIn;
 export const getLoading = (state: State) => state.loading;
 export const getError = (state: State) => state.errorMsg;
+export const getRedirectUrl = (state: State) => state.redirectUrl;
 
 export const reducer = createReducer(
     initialState,
@@ -39,7 +42,7 @@ export const reducer = createReducer(
     ),  
     on(
         AuthActions.AUTOLOGIN_SUCCESS,
-        (state, action) => ({...state, user: action.user, loading: false, loggedIn: true, errorMsg: initialState.errorMsg}),
+        (state, action) => ({...state, user: action.user, loading: false, loggedIn: true, errorMsg: initialState.errorMsg, redirectUrl: initialState.redirectUrl}),
     ),      
     on(
         AuthActions.LOGOUT,
@@ -48,5 +51,9 @@ export const reducer = createReducer(
     on(
         AuthActions.LOGIN_FAILURE,
         (state, action) => ({...state, loading: false, errorMsg: action.error})
+    ),
+    on(
+        AuthActions.NOT_LOGGED_IN,
+        (state, action) => ({...state, redirectUrl: action.url})
     )
 );

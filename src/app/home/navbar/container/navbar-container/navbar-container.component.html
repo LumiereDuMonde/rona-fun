@@ -1,4 +1,7 @@
 <app-navbar-presentation 
 [favorites]="favorites$ | ngrxPush" 
-(toggle)="toggle()">
+[url]="url$ | ngrxPush"
+[loggedIn]="loggedIn$ | ngrxPush"
+(toggle)="toggle()"
+(logout)="logout()">
 </app-navbar-presentation>

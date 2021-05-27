@@ -31,6 +31,7 @@
     "@ngrx/store-devtools": "^11.1.0",
     "@swimlane/ngx-graph": "^7.2.0",
     "chart.js": "^2.9.3",
+    "chartjs-plugin-streaming": "^1.9.0",
     "masonry-layout": "^4.2.2",
     "moment": "^2.29.1",
     "ng2-charts": "^2.4.2",
@@ -38,6 +39,7 @@
     "ngx-infinite-scroll": "^10.0.1",
     "ngx-masonry": "^11.0.1",
     "rxjs": "~6.6.0",
+    "rxjs-websockets": "^8.0.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
@@ -60,6 +62,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-mocks": "^12.0.2",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",

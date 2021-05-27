@@ -15,10 +15,10 @@ import * as fromApp from './store/app.reducer';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnDestroy, OnInit, AfterViewInit { 
+export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
   mobileQuery: MediaQueryList;
   title = 'Rona fun';
-  
+
   route$: Observable<string>;
   @ViewChild('sideNav') snav: MatSidenav;
   subscription: Subscription;
@@ -26,25 +26,27 @@ export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, 
-    media: MediaMatcher, 
-    private authService: AuthService, 
-    private store: Store) {      
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+  constructor(changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    private authService: AuthService,
+    private store: Store) {
+    this.mobileQuery = media.matchMedia('(max-width: 900px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngAfterViewInit(): void {
-    
+
     this.subscription = this.store.select(fromApp.selectSideNavToggle).subscribe((setOpen) => {
-      this.snav.opened = setOpen;
+      if (this.snav) {
+        this.snav.opened = setOpen;
+      }
     });
   }
 
   ngOnInit(): void {
-    this.store.dispatch(AuthActions.AUTOLOGIN_START());    
-    this.route$ = this.store.select(fromApp.selectUrl);    
+    this.store.dispatch(AuthActions.AUTOLOGIN_START());
+    this.route$ = this.store.select(fromApp.selectUrl);
 
   }
 
@@ -53,8 +55,8 @@ export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
     this.subscription?.unsubscribe();
   }
 
-  logout() {    
-    this.authService.logout();    
+  logout() {
+    this.authService.logout();
   }
 
   toggle() {

@@ -1,0 +1,60 @@
+.mat-header-cell,
+.mat-cell {
+    padding: 0 0.20rem;
+    text-align: center;
+}
+
+.mat-header-cell {
+    color: rgb(245, 222, 179);
+}
+
+.mat-cell {
+    color: rgb(255, 0, 0);
+}
+
+mat-row,
+mat-header-row,
+mat-footer-row,
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    border-bottom-color: rgb(245, 222, 179);
+}
+
+.bid-group .mat-cell {
+    color: rgb(0, 255, 0);
+}
+
+h4 {
+    margin: 0.2rem;
+    text-align: center;
+    color: rgb(245, 222, 179);
+    margin-top: 1rem;
+    @media screen and (min-width: 1200px) {
+        margin-top: 2rem;
+    }        
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type {
+    padding: 0 0.5rem;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type {
+    padding: 0 0.5rem;
+}
+
+tr.mat-header-row,
+tr.mat-row {
+    height: 1.5rem;
+}
+
+table {
+    font-family: 'Inconsolata', monospace;
+    background: transparent;
+    border-color: rgb(245, 222, 179);
+    width: 100%;
+    min-width: 220px;
+}
+

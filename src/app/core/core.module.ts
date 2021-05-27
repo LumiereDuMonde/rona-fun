@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { A11yModule } from '@angular/cdk/a11y';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatSelectModule,
     A11yModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTableModule
   ]
 })
 export class CoreModule { }

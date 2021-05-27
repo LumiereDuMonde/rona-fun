@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'charting', loadChildren: () => import('./charting/charting.module').then(m => m.ChartingModule) },
   { path: 'meme', component: MemeComponent }, //loadChildren: () => import('./meme/meme.module').then(m => m.MemeModule)
   { path: 'panel', loadChildren: () => import('./instrumentation/instrumentation.module').then(m => m.InstrumentationModule) },
+  { path: 'trading', loadChildren: () => import('./trading/trading.module').then(m => m.TradingModule) },
   { path: '**', redirectTo: '/auth'}  
 ];
 

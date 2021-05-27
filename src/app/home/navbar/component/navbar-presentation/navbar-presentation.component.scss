@@ -1,11 +1,27 @@
 .rona-toolbar {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 25;
+    font-family: 'Roboto Mono', monospace;
 
     .bookmark-btn {
-        margin-left: auto;
+        position: fixed;
+        bottom: 20px;
+        right: 40px;
+        border-radius: 50px; 
         padding: 0;
-        &.mat-button-disabled{
-            background-color: rgba(0,0,0,0);
-        }        
+        height: 75px;
+        width: 75px;
+        padding: 5px;
+        z-index: 25;
+        box-shadow: 2px 2px 2px rgb(92, 91, 91);
+        background: rgb(49, 85, 131) ;
+        // &.mat-button-disabled {
+        //     background-color: rgba(0, 0, 0, 0);
+        // }
     }
 
     .logo {
@@ -18,8 +34,8 @@
     .bookmark {
         color: darkgrey;
         opacity: 1;
-        
-    } 
+
+    }
 
     .rona-is-mobile {
         position: fixed;
@@ -31,10 +47,77 @@
         opacity: 0.5;
     }
 
-    h1.rona-app-name {
-        margin-left: 16px;
-    }
+    .toolbar--btn {
+        color: rgb(0, 0, 0);
+        &.secondary-color {
+            color: rgb(214, 190, 146);
+        }
+    }  
 
+    .header-menu {
+        display: none;        
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;        
+        width: 100%;
+        li {
+            display: flex;
+            color:black;
+            a {
+                text-decoration: none;
+                padding: 0 15px;
+                cursor: pointer;
+                color:black;
+                &.link-active {
+                    font-weight: bolder;
+                    text-decoration: underline;
+                    &:before {
+                        content: ">";
+                        margin-right: 2px;
+                        text-decoration: none;
+                        display:inline-block;
+                    }  
+                    &:after {
+                        content: "<";
+                        margin-left: 2px;
+                        text-decoration: none;
+                        display:inline-block;
+                    }                                       
+                }
+
+            }
+            &:first-child{
+                visibility: hidden;
+                margin-right: auto;
+            }
+            &:last-child{
+                
+                margin-left:auto;
+            }
+        }
+        &.secondary-color {
+            li {
+                a {
+                    color: rgb(214, 190, 146);
+                }
+            }
+            
+        }
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .rona-toolbar {
+        justify-content: center;
+
+        .toolbar--btn {
+            display: none;
+        }
+
+        .header-menu {
+            display: flex;
+        }
+    }
 }
 
 .bookmark-menu {
@@ -42,11 +125,12 @@
         margin: 0.25rem 0;
     }
 
-    > span {
+    >span {
         padding: 0 0.5rem;
         opacity: 0.5;
         font-weight: 200;
     }
+
     button {
         background-color: transparent;
         background-repeat: no-repeat;

@@ -34,7 +34,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "chart.js"
+              "chart.js",
+              "chartjs-plugin-streaming"
             ]
           },
           "configurations": {

@@ -7,8 +7,6 @@
   left: 0;
   right: 0;
 
-
-
   .mat-drawer {
     min-width: 225px;
   }
@@ -16,8 +14,7 @@
   .rona-sidenav-container {
     /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
          causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-    flex: 1;
-
+    flex: 1;    
     .mat-list-item {
       mat-icon {
         margin-right: 0.5rem;
@@ -37,5 +34,6 @@
     .link-active {
       background: #ccc;
     }
+       
   }
 }

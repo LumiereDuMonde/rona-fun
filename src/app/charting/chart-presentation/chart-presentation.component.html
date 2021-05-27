@@ -1,7 +1,7 @@
 <h3 id="title">{{chartTitle}}</h3>
 <div id="container">
   <canvas id="chart" baseChart [datasets]="chartdata" [labels]="chartLabels" [options]="lineChartOptions"
-    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins"
+    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="'line'" 
     #myChart="base-chart">
   </canvas>
   <div class="overlay-background transparent" *ngIf="!loading && chartDataEmpty">
