@@ -13,8 +13,7 @@
   </ul>
   <button class="bookmark-btn" mat-flat-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu"
     *ngIf="favorites.length !== 0">
-    <mat-icon class="bookmark" [matBadge]="favorites.length" matBadgeColor="warn">favorite</mat-icon>
-    <mat-icon>arrow_drop_up</mat-icon>
+    <mat-icon class="bookmark">favorite</mat-icon>    
   </button>
   <mat-menu #menu="matMenu">
     <div class="bookmark-menu">

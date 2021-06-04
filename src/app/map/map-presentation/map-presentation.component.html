@@ -1,0 +1,29 @@
+<google-map #map="googleMap" height="100%" width="100%" [options]="options" [zoom]="zoom$ | async">
+    <map-marker #locationMarker="mapMarker" 
+        [position]="markerLocation"
+        [icon]="markerLocationIcon" 
+        [options]="locationMarkerOptions"                                 
+        *ngIf="iconIsVisible">
+    </map-marker>
+    <map-marker-clusterer #mc></map-marker-clusterer>
+</google-map>
+<div class="targeting-layer" #targetting [ngStyle]="overlay$ | async">
+
+</div>
+
+<div class="loading-layer" *ngIf="!iconIsVisible && !hasError && hasLocation">    
+    <div class="telemetry-data">
+        <div [ngClass]="flashText" (animationend)="flashText.flash = false">{{infoText}}</div>
+        <div>{{this.data1[0] }}</div>
+        <div>{{this.data1[1] }}</div>
+        <div>{{this.data1[2] }}</div>
+        <div>{{this.data2[0] }}</div>
+        <div>{{this.data2[1] }}</div>
+        <div>{{this.data2[2] }}</div>
+        <div>{{this.data3[0] }}</div>
+        <div>{{this.data3[1] }}</div>
+        <div>{{this.data3[2] }}</div>               
+    </div>      
+</div>
+<div class="element-animation" *ngIf="!iconIsVisible && !hasError && hasLocation"></div>
+
