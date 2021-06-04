@@ -43,7 +43,7 @@ export class MapPresentationComponent implements OnInit, AfterViewInit, OnDestro
     opacity: 0.6
   };
   markerLocationIcon = {
-    url: '../../../assets/img/target_finished.svg',
+    url: '../../../assets/img/target_finish.svg',
     anchor: new google.maps.Point(50, 65),
     origin: new google.maps.Point(0, 0),
     scaledSize: new google.maps.Size(100, 100),
