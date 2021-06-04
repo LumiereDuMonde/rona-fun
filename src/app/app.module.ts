@@ -50,8 +50,7 @@ import { environment } from 'src/environments/environment';
     }) : [],
     ChartsModule,
     CoreModule,
-    AuthModule,
-    MemeModule    
+    AuthModule    
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]

@@ -9,10 +9,11 @@
     <li><a [routerLink]="['/trading']" routerLinkActive="link-active">Trading</a></li>
     <li><a [routerLink]="['/meme']" routerLinkActive="link-active">Image Search</a></li>
     <li><a [routerLink]="['/panel']" routerLinkActive="link-active">Instruments</a></li>
+    <li><a [routerLink]="['/map']" routerLinkActive="link-active">Map</a></li>
     <li><a (click)="logout.emit()" *ngIf="loggedIn">Logout</a></li>
   </ul>
   <button class="bookmark-btn" mat-flat-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu"
-    *ngIf="favorites.length !== 0">
+    *ngIf="favorites?.length > 0">
     <mat-icon class="bookmark">favorite</mat-icon>    
   </button>
   <mat-menu #menu="matMenu">
