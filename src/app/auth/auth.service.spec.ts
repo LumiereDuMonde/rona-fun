@@ -1,16 +1,18 @@
-import { TestBed } from '@angular/core/testing';
+import * as AuthActions from './actions/auth.actions';
+
 import {
   HttpClientTestingModule,
   HttpTestingController
 } from '@angular/common/http/testing';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { Router } from '@angular/router';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+
 import { AuthService } from './auth.service';
-import { User } from '../models/user.model';
-import * as AuthActions from './actions/auth.actions';
-import { RouterTestingModule } from '@angular/router/testing';
-import { LoginResult } from './models/LoginResult.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginResult } from './models/LoginResult.model';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed } from '@angular/core/testing';
+import { User } from '../models/user.model';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -27,7 +29,7 @@ describe('AuthService', () => {
     },
   };
 
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -40,26 +42,26 @@ describe('AuthService', () => {
       ]
     });
 
-    spyOn(localStorage.__proto__, 'removeItem');    
+    spyOn(localStorage.__proto__, 'removeItem');
     httpTestingController = TestBed.inject(HttpTestingController);
     store = TestBed.inject(MockStore);
-    spyOn(store, 'dispatch');    
+    spyOn(store, 'dispatch');
   });
 
   describe('constructor test', () => {
 
     it('constructor with no user', async () => {
-      spyOn(AuthService.prototype, 'clearTimer');    
-      spyOn(AuthService.prototype, 'autoLogout');      
+      spyOn(AuthService.prototype, 'clearTimer');
+      spyOn(AuthService.prototype, 'autoLogout');
       service = TestBed.inject(AuthService);
-      
+
       expect(service.clearTimer).toHaveBeenCalled();
       expect(service.autoLogout).not.toHaveBeenCalled();
     });
 
     it('constructor with user', () => {
-      spyOn(AuthService.prototype, 'clearTimer');    
-      spyOn(AuthService.prototype, 'autoLogout');      
+      spyOn(AuthService.prototype, 'clearTimer');
+      spyOn(AuthService.prototype, 'autoLogout');
       const user = new User('user@service.com', 'username', 'token', new Date('01/01/2031'));
       const stateWithUser = {
         auth: {
@@ -82,7 +84,7 @@ describe('AuthService', () => {
     beforeEach(() => {
       service = TestBed.inject(AuthService);
       spyOn(service,'clearTimer');
-      spyOn(service,'autoLogout');      
+      spyOn(service,'autoLogout');
     });
 
     it('can load instance', () => {
@@ -126,7 +128,7 @@ describe('AuthService', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/auth']);
       });
     });
-  
+
     it('autoLogin no user', () => {
       const user = service.autoLogin();
       expect(user).toEqual(undefined);
@@ -140,34 +142,34 @@ describe('AuthService', () => {
       });
       const user = service.autoLogin();
       expect(JSON.stringify(user)).toEqual(userStr);
-    });    
+    });
 
-    it('handleAuthentication', () => {   
-      jasmine.clock().install();     
-      
+    it('handleAuthentication', () => {
+      jasmine.clock().install();
+
       jasmine.clock().mockDate(new Date(2021, 1, 1));
       const res: LoginResult = {
         email: 'user@user.com',
         idToken: '1',
         refreshToken: '2',
         expiresIn: '60',
-        localId: '3'        
+        localId: '3'
       };
       spyOn(localStorage, 'setItem');
       const expectedUser = new User('user@user.com','3','1',new Date(2021,1,1,0,1));
       const user = service.handleAuthentication(res);
-      expect(localStorage.setItem).toHaveBeenCalled();      
-      expect(user).toEqual(expectedUser);   
-      jasmine.clock().uninstall();   
-    }); 
-    
+      expect(localStorage.setItem).toHaveBeenCalled();
+      expect(user).toEqual(expectedUser);
+      jasmine.clock().uninstall();
+    });
+
     it('handleError with EMAIL_EXISTS handled message', () => {
       const errorResponse = new HttpErrorResponse({
         error: { error: {
           message: 'EMAIL_EXISTS'
         }},
         status: 404, statusText: 'Not Found'
-      })            
+      })
       const errorMsg = service.handleError(errorResponse);
       expect(errorMsg).toEqual('Email already exists');
     });
@@ -178,7 +180,7 @@ describe('AuthService', () => {
           message: 'OPERATION_NOT_ALLOWED'
         }},
         status: 404, statusText: 'Not Found'
-      })            
+      })
       const errorMsg = service.handleError(errorResponse);
       expect(errorMsg).toEqual('Sign in disabled for this project');
     });
@@ -189,10 +191,10 @@ describe('AuthService', () => {
           message: 'TOO_MANY_ATTEMPTS_TRY_LATER'
         }},
         status: 404, statusText: 'Not Found'
-      })            
+      })
       const errorMsg = service.handleError(errorResponse);
       expect(errorMsg).toEqual('Too many attempts, try later');
-    });    
+    });
 
     it('handleError with EMAIL_NOT_FOUND handled message', () => {
       const errorResponse = new HttpErrorResponse({
@@ -200,32 +202,32 @@ describe('AuthService', () => {
           message: 'EMAIL_NOT_FOUND'
         }},
         status: 404, statusText: 'Not Found'
-      })            
+      })
       const errorMsg = service.handleError(errorResponse);
       expect(errorMsg).toEqual('Email not found');
-    });    
-    
+    });
+
     it('handleError with INVALID_PASSWORD handled message', () => {
       const errorResponse = new HttpErrorResponse({
         error: { error: {
           message: 'INVALID_PASSWORD'
         }},
         status: 404, statusText: 'Not Found'
-      })            
+      })
       const errorMsg = service.handleError(errorResponse);
       expect(errorMsg).toEqual('Password is invalid');
-    });    
-    
+    });
+
     it('handleError with USER_DISABLED handled message', () => {
       const errorResponse = new HttpErrorResponse({
         error: { error: {
           message: 'USER_DISABLED'
         }},
         status: 404, statusText: 'Not Found'
-      })            
+      })
       const errorMsg = service.handleError(errorResponse);
       expect(errorMsg).toEqual('User is disabled');
-    });    
+    });
 
     it('handleError with unhandled message', () => {
       const errorResponse = new HttpErrorResponse({
@@ -233,36 +235,36 @@ describe('AuthService', () => {
           message: 'THIS_BROKE'
         }},
         status: 404, statusText: 'Not Found'
-      })            
+      })
       const errorMsg = service.handleError(errorResponse);
       expect(errorMsg).toEqual('An error has occurred.');
-    });    
-    
+    });
+
   });
 
   describe('autoLogout', () => {
     let windowSpy : any;
     beforeEach(() => {
       service = TestBed.inject(AuthService);
-      windowSpy = spyOn(window,'setTimeout');      
+      windowSpy = spyOn(window,'setTimeout');
     });
 
     it('check global timer has been called', () => {
       service.autoLogout(5000);
-      expect(setTimeout).toHaveBeenCalled();      
+      expect(setTimeout).toHaveBeenCalled();
     });
 
     afterEach(() => {
       windowSpy.calls.reset();
-    });    
+    });
   });
 
   describe('clearTimer', () => {
     let windowSpy : any;
     beforeEach(() => {
       service = TestBed.inject(AuthService);
-      windowSpy = spyOn(window,'clearTimeout'); 
-      // needs call through otherwise it will throw an error because the timer isn't actually cleared     
+      windowSpy = spyOn(window,'clearTimeout');
+      // needs call through otherwise it will throw an error because the timer isn't actually cleared
       windowSpy.and.callThrough();
     });
 
@@ -276,17 +278,17 @@ describe('AuthService', () => {
       windowSpy.calls.reset();
     });
   });
-  
-    
+
+
   describe('Destructor tests', () => {
     beforeEach(() => {
       service = TestBed.inject(AuthService);
     });
 
     it('unsubscribe from subscription', () => {
-      spyOn(service['subscription'], 'unsubscribe');
+      spyOn(service['subs'], 'unsubscribe');
       service.ngOnDestroy();
-      expect(service['subscription'].unsubscribe).toHaveBeenCalled();
+      expect(service['subs'].unsubscribe).toHaveBeenCalled();
     });
   });
 

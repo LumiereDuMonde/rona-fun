@@ -1,35 +1,47 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
+
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TelemetryService {
-
+export class TelemetryService implements OnDestroy {
   // just a super quick and dirty service to create the random data from the UI elements on the screen.
 
-  private telemetryData1 = new BehaviorSubject<string[]>(["0","0","0"]);  
-  private telemetryData2 = new BehaviorSubject<Array<string>>(["0","0","0"]);
-  private telemetryData3 = new BehaviorSubject<Array<string>>(["0","0","0"]);
+  private telemetryData1 = new BehaviorSubject<string[]>(['0', '0', '0']);
+  private telemetryData2 = new BehaviorSubject<Array<string>>(['0', '0', '0']);
+  private telemetryData3 = new BehaviorSubject<Array<string>>(['0', '0', '0']);
   handle1: any;
   handle2: any;
   handle3: any;
 
-  constructor() { }
+  constructor() {}
 
   generateRandomString() {
-    return (Math.random()*100).toString().slice(0,10);
+    return (Math.random() * 100).toString().slice(0, 10);
   }
 
   start() {
     this.handle1 = setInterval(() => {
-      this.telemetryData1.next([this.generateRandomString(), this.generateRandomString(), this.generateRandomString()]);      
+      this.telemetryData1.next([
+        this.generateRandomString(),
+        this.generateRandomString(),
+        this.generateRandomString()
+      ]);
     }, 100);
     this.handle2 = setInterval(() => {
-      this.telemetryData2.next([this.generateRandomString(), this.generateRandomString(), this.generateRandomString()]);
+      this.telemetryData2.next([
+        this.generateRandomString(),
+        this.generateRandomString(),
+        this.generateRandomString()
+      ]);
     }, 120);
     this.handle3 = setInterval(() => {
-      this.telemetryData3.next([this.generateRandomString(), this.generateRandomString(), this.generateRandomString()]);
+      this.telemetryData3.next([
+        this.generateRandomString(),
+        this.generateRandomString(),
+        this.generateRandomString()
+      ]);
     }, 80);
   }
 
@@ -44,10 +56,14 @@ export class TelemetryService {
   }
 
   getData2() {
-    return  this.telemetryData2.asObservable();
+    return this.telemetryData2.asObservable();
   }
 
   getData3() {
-    return  this.telemetryData3.asObservable();
+    return this.telemetryData3.asObservable();
+  }
+
+  ngOnDestroy(): void {
+    this.stop();
   }
 }

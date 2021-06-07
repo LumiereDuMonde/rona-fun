@@ -1,4 +1,4 @@
-<div class="trading-chart">
+<div class="trading-chart" *ngIf="trades$ | async">
     <canvas baseChart [chartType]="'line'" [datasets]="datasets" [options]="lineChartOptions"  id="tradeChart" #tradeChart="base-chart">
-    </canvas>    
-</div>  
+    </canvas>
+</div>

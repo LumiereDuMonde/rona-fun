@@ -1,28 +1,34 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { GoogleMap, MapMarker, MapMarkerClusterer } from '@angular/google-maps';
-import { Address } from 'ngx-google-places-autocomplete/objects/address';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+
+import { BehaviorSubject } from 'rxjs';
+import { SubSink } from 'subsink';
 import { TelemetryService } from '../telemetry.service';
 
 export const myCssClass = (top, left, width, height): any => {
   return {
-    'width': width,
-    'height': height,
-    'top': top,
-    'left': left,
-    'transform': 'rotate(1440deg)'
-  }
+    width: width,
+    height: height,
+    top: top,
+    left: left,
+    transform: 'rotate(1440deg)'
+  };
 };
-
-
 
 @Component({
   selector: 'app-map-presentation',
   templateUrl: './map-presentation.component.html',
   styleUrls: ['./map-presentation.component.scss']
 })
-export class MapPresentationComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapPresentationComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   readonly maxZoom = 15;
   initialZoom = 7;
   currentZoom = this.initialZoom;
@@ -33,7 +39,7 @@ export class MapPresentationComponent implements OnInit, AfterViewInit, OnDestro
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     scrollwheel: true,
     disableDefaultUI: true,
-    disableDoubleClickZoom: true,
+    disableDoubleClickZoom: true
   };
 
   markerLocation: google.maps.LatLngLiteral | null;
@@ -46,7 +52,7 @@ export class MapPresentationComponent implements OnInit, AfterViewInit, OnDestro
     url: 'assets/img/tg.svg',
     anchor: new google.maps.Point(50, 65),
     origin: new google.maps.Point(0, 0),
-    scaledSize: new google.maps.Size(100, 100),
+    scaledSize: new google.maps.Size(100, 100)
   } as google.maps.Icon;
   iconIsVisible = false;
   hasError = false;
@@ -55,43 +61,45 @@ export class MapPresentationComponent implements OnInit, AfterViewInit, OnDestro
     flash: false
   };
 
-
   zoom$ = new BehaviorSubject<number>(this.initialZoom);
-  overlay$ = new BehaviorSubject<{ [klass: string]: any; } | null>(null);
+  overlay$ = new BehaviorSubject<{ [klass: string]: any } | null>(null);
   data1: Array<string> | null;
   data2: Array<string> | null;
   data3: Array<string> | null;
-  sub1?: Subscription;
-  sub2?: Subscription;
-  sub3?: Subscription;
+  private subs = new SubSink();
 
   @ViewChild(GoogleMap) map: GoogleMap | undefined;
   @ViewChild('mc') mc: MapMarkerClusterer | undefined;
   @ViewChild('targeting') targetting: HTMLDivElement;
   @ViewChild('locationMarker') locationMarker: MapMarker | undefined;
-  infoText : string = 'Searching...';
-  
+  infoText: string = 'Searching...';
 
-  constructor(private ts: TelemetryService) { }
-
+  constructor(private ts: TelemetryService) {}
 
   ngAfterViewInit(): void {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.hasLocation = true;
-      const currentLocation = new google.maps.LatLng(
-        position.coords.latitude,
-        position.coords.longitude
-      );
-      this.markerLocation = {
-        lat: currentLocation.lat(),
-        lng: currentLocation.lng()
-      };
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.hasLocation = true;
+        const currentLocation = new google.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        this.markerLocation = {
+          lat: currentLocation.lat(),
+          lng: currentLocation.lng()
+        };
 
-      if (this.map) {
-        this.intervalHandle = setInterval(() => this.onInterval(currentLocation), 4000);
-        this.textIntervalHandle = setInterval(() => this.onTextInterval(), 2000);
-      }
-    },
+        if (this.map) {
+          this.intervalHandle = setInterval(
+            () => this.onInterval(currentLocation),
+            4000
+          );
+          this.textIntervalHandle = setInterval(
+            () => this.onTextInterval(),
+            2000
+          );
+        }
+      },
       (error) => {
         console.log('location error');
         console.log(error);
@@ -109,7 +117,6 @@ export class MapPresentationComponent implements OnInit, AfterViewInit, OnDestro
     if (this.currentZoom <= this.maxZoom) {
       this.map.panTo(currentLocation);
       this.zoom$.next(++this.currentZoom);
-
     } else {
       this.iconIsVisible = true;
       clearInterval(this.intervalHandle);
@@ -119,33 +126,31 @@ export class MapPresentationComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onTextInterval() {
-    if(this.currentZoom >this.maxZoom) {
+    if (this.currentZoom > this.maxZoom) {
       this.infoText = 'Drone strike set..';
     } else {
-      this.infoText = (this.currentZoom % 2 === 0) ?  'Searching...' : 'Enhance...';        
+      this.infoText =
+        this.currentZoom % 2 === 0 ? 'Searching...' : 'Enhance...';
     }
     this.flashText.flash = true;
   }
 
   ngOnInit(): void {
-    this.sub1 = this.ts.getData1().subscribe(result => {
+    this.subs.sink = this.ts.getData1().subscribe((result) => {
       this.data1 = [...result];
     });
-    this.sub2 = this.ts.getData2().subscribe(result => {
+    this.subs.sink =  this.ts.getData2().subscribe((result) => {
       this.data2 = [...result];
     });
-    this.sub3 = this.ts.getData3().subscribe(result => {
+    this.subs.sink = this.ts.getData3().subscribe((result) => {
       this.data3 = [...result];
     });
     this.ts.start();
   }
 
   ngOnDestroy(): void {
-    this.sub1?.unsubscribe();
-    this.sub2?.unsubscribe();
-    this.sub3?.unsubscribe();
+    this.subs.unsubscribe();
     clearInterval(this.textIntervalHandle);
     clearInterval(this.intervalHandle);
   }
-
 }

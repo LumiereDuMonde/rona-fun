@@ -1,11 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { LoginUser } from './models/LoginUser.model';
-import * as fromAuth from './reducers';
 import * as AuthActions from './actions/auth.actions';
-import { NgForm } from '@angular/forms';
+import * as fromAuth from './reducers';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { LoginUser } from './models/LoginUser.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-auth',
@@ -13,9 +16,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  
-  isLoading$: Observable<boolean>;  
-  subscription: Subscription;
+  private subs = new SubSink();
+  isLoading$: Observable<boolean>;
   email = 'test@test.com'
   password= 'ABigPasswordIsHere#';
 
@@ -23,24 +25,24 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading$ = this.store.select(fromAuth.selectAuthLoading);
-    this.subscription = this.store.select(fromAuth.selectAuthError).subscribe(error => {
-      this._snackBar.dismiss();      
-      if (error?.length > 0) {        
+    this.subs.sink = this.store.select(fromAuth.selectAuthError).subscribe(error => {
+      this._snackBar.dismiss();
+      if (error?.length > 0) {
         this._snackBar.open(error);
       }
-    });        
+    });
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe(); 
+    this.subs.unsubscribe();
   }
 
 
   onSubmit(form: NgForm) {
     const email = form.value.email;
-    const password = form.value.password;       
+    const password = form.value.password;
 
-    this.store.dispatch(AuthActions.LOGIN_START({signup: new LoginUser(email, password)}));          
-  }  
+    this.store.dispatch(AuthActions.LOGIN_START({signup: new LoginUser(email, password)}));
+  }
 
 }

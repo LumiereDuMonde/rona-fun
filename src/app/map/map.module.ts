@@ -1,13 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { MapRoutingModule } from './map-routing.module';
-import { MapComponent } from './map.component';
-import { MapPresentationComponent } from './map-presentation/map-presentation.component';
+import { CoreModule } from '../core/core.module';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { CoreModule } from '../core/core.module';
-
+import { MapComponent } from './map.component';
+import { MapPresentationComponent } from './map-presentation/map-presentation.component';
+import { MapRoutingModule } from './map-routing.module';
+import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [MapComponent, MapPresentationComponent],
@@ -19,4 +17,4 @@ import { CoreModule } from '../core/core.module';
     GooglePlaceModule
   ]
 })
-export class MapModule { }
+export class MapModule {}

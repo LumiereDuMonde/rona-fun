@@ -1,59 +1,45 @@
-import { MediaMatcher } from '@angular/cdk/layout';
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AuthService } from './auth/auth.service';
 import * as AuthActions from './auth/actions/auth.actions';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Observable, Subscription } from 'rxjs';
 import * as UIActions from './store/actions/ui.actions';
-
 import * as fromApp from './store/app.reducer';
+
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Observable, from } from 'rxjs';
+import { map, tap, withLatestFrom } from 'rxjs/operators';
+
+import { AuthService } from './auth/auth.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Store } from '@ngrx/store';
+import { mediaQueryMatch } from 'subscribable-things';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-
-export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
-  mobileQuery: MediaQueryList;
+export class AppComponent implements OnInit {
   title = 'Rona fun';
 
+  toggle$ = this.store.select(fromApp.selectSideNavToggle);
+  mediaQueryMatch$? = from(mediaQueryMatch('(max-width: 900px)')).pipe(
+    withLatestFrom(this.toggle$),
+    tap(([isMediaMatch, isToggled]) => {
+      if(isToggled && !isMediaMatch) {
+        this._ngZone.run(() => this.toggle());
+      }
+    }),
+    map(([isMediaMatch]) => isMediaMatch)
+  );
   route$: Observable<string>;
   @ViewChild('sideNav') snav: MatSidenav;
-  subscription: Subscription;
 
-
-  private _mobileQueryListener: () => void;
-
-  constructor(changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    private authService: AuthService,
-    private store: Store) {
-    this.mobileQuery = media.matchMedia('(max-width: 900px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-  }
-
-  ngAfterViewInit(): void {
-
-    this.subscription = this.store.select(fromApp.selectSideNavToggle).subscribe((setOpen) => {
-      if (this.snav) {
-        this.snav.opened = setOpen;
-      }
-    });
-  }
+  constructor(private authService: AuthService, private store: Store, private _ngZone: NgZone) {}
 
   ngOnInit(): void {
     this.store.dispatch(AuthActions.AUTOLOGIN_START());
     this.route$ = this.store.select(fromApp.selectUrl);
-
   }
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
-    this.subscription?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   logout() {
     this.authService.logout();
@@ -62,5 +48,4 @@ export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
   toggle() {
     this.store.dispatch(UIActions.TOGGLE_SIDE_NAV());
   }
-
 }

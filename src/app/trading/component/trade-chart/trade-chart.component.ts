@@ -1,23 +1,54 @@
-import { AfterViewInit, Component, Input, OnDestroy, ViewChild } from '@angular/core';
+import 'chartjs-plugin-streaming';
+
+import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
+
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartPoint } from 'chart.js';
-import 'chartjs-plugin-streaming';
-import { Observable, Subscription } from 'rxjs';
 import { ITrade } from '../../models/trade.model';
-
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-trade-chart',
   templateUrl: './trade-chart.component.html',
-  styleUrls: ['./trade-chart.component.scss']
+  styleUrls: ['./trade-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TradeChartComponent implements AfterViewInit, OnDestroy {
-  @Input() trades: Observable<ITrade[]>;
+export class TradeChartComponent {
+  @Input() set trades(value: Observable<ITrade[]>) {
+    this.trades$ = value.pipe(
+      tap((trades) => {
+      if (!trades) return;
+
+      this.lastTrade = [...trades];
+      trades.forEach((value, index) => {
+        //price
+        (this.datasets[0].data as ChartPoint[]).push({
+          x: +value.time * 1000,
+          y: +value.price
+        });
+
+        //volume
+        if (index === 0) {
+          (this.datasets[1].data as ChartPoint[]).push({
+            x: +value.time * 1000,
+            y: +value.volume
+          });
+        } else {
+          this.datasets[1].data[this.datasets[1].data.length - 1].y += +value.volume;
+        }
+
+      });
+      // append the new data to the existing chart data
+      this.tradeChart?.update('none');
+    }));
+  }
+
+  trades$: Observable<ITrade[]> | null;
   lastTrade: ITrade[]= [];
-  subscription: Subscription;
 
   @ViewChild('tradeChart')
-  tradeChart: BaseChartDirective;
+  tradeChart?: BaseChartDirective;
 
   datasets: any[] = [{
     label: 'Bitcoin ($)',
@@ -35,8 +66,6 @@ export class TradeChartComponent implements AfterViewInit, OnDestroy {
     yAxisID: 'right-axis',
     barThickness: 3
   }];
-
-
 
   plugins: [
     streaming: {          // per-chart option
@@ -100,45 +129,5 @@ export class TradeChartComponent implements AfterViewInit, OnDestroy {
     }
   };
 
-
-  constructor() { }
-
-
-
-  ngAfterViewInit(): void {
-    this.subscription = this.trades.subscribe((trades) => {
-      if (!trades) return;
-
-      this.lastTrade = [...trades]; 
-      trades.forEach((value, index) => {
-        //price
-        (this.datasets[0].data as ChartPoint[]).push({
-          x: +value.time * 1000,
-          y: +value.price
-        });
-        
-        //volume
-        if (index === 0) {
-          (this.datasets[1].data as ChartPoint[]).push({
-            x: +value.time * 1000,
-            y: +value.volume
-          });
-        } else {
-          this.datasets[1].data[this.datasets[1].data.length - 1].y += +value.volume;
-        }
-        
-      });
-      // append the new data to the existing chart data              
-      this.tradeChart.update('none');
-    });
-  }
-
-  ngOnInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
-
+  constructor() {}
 }
