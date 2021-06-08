@@ -19,6 +19,9 @@
         <a mat-list-item [routerLink]="['/map']" (click)="toggle()" routerLinkActive="link-active">
           <mat-icon>public</mat-icon> Map
         </a>
+        <a mat-list-item [routerLink]="['/random']" (click)="toggle()" routerLinkActive="link-active">
+          <mat-icon><span class="material-icons">help_outline</span></mat-icon> Random
+        </a>
         <mat-divider></mat-divider>
         <a mat-list-item (click)="logout()">
           <mat-icon>logout</mat-icon> Logout

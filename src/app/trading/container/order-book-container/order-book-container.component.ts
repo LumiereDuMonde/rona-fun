@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { debounceTime } from 'rxjs/operators';
+import { throttleTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order-book-container',
@@ -20,8 +20,8 @@ export class OrderBookContainerComponent implements OnInit, OnDestroy {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.askBook$ = this.store.select(fromTrading.selectAskBook).pipe(debounceTime(100));
-    this.bidBook$ = this.store.select(fromTrading.selectBidBook).pipe(debounceTime(100));
+    this.askBook$ = this.store.select(fromTrading.selectAskBook).pipe(throttleTime(100));
+    this.bidBook$ = this.store.select(fromTrading.selectBidBook).pipe(throttleTime(100));
     this.store.dispatch(BookActions.BOOK_STARTING());
   }
 
