@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/random', pathMatch: 'full' },
+  { path: '', redirectTo: '/charting', pathMatch: 'full' },
   { path: 'charting', loadChildren: () => import('./charting/charting.module').then(m => m.ChartingModule) },
   { path: 'meme', loadChildren: () => import('./meme/meme.module').then(m => m.MemeModule) },
   { path: 'panel', loadChildren: () => import('./instrumentation/instrumentation.module').then(m => m.InstrumentationModule) },

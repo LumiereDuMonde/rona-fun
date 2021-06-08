@@ -60,26 +60,9 @@ export class DynamicAnimateDirective implements AfterViewInit {
     const animation = this.builder.build(animationMetaData);
     const player = animation.create(this.el.nativeElement);
     player.onDone(() => {
-      console.log('Animation Finished');
       this.dynamicAnimationDone.emit();
     });
     player.play();
-  }
-
-  private getFadeInAnimation(): AnimationMetadata[] {
-
-    return [
-      animate('4000ms ease-in', style({ opacity: 1, background: this.generateRGB() , transform: this.generateTranslateWithScale()}))
-    ];
-  }
-
-  private getFadeOutAnimation(): AnimationMetadata[] {
-    return [
-      animate(
-        '400ms ease-in',
-        style({ opacity: 0.5, background: this.generateRGB(), transform: 'translate(200px,200px)' })
-      )
-    ];
   }
 
   private getMouseAnimation(): AnimationMetadata[] {
@@ -89,12 +72,7 @@ export class DynamicAnimateDirective implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
-    // this.playAnimation(this.getFadeOutAnimation());
-    // setTimeout(() => {
-    //   this.playAnimation(this.getFadeInAnimation());
-    // }, 2000);
-    this.el.nativeElement.style.setProperty('position', 'absolute');
+    this.el.nativeElement.style.setProperty('position', 'fixed');
     this.el.nativeElement.style.setProperty('top', `${this.startPosition.y}px`);
     this.el.nativeElement.style.setProperty('left', `${this.startPosition.x}px`);
     this.el.nativeElement.style.setProperty('background', `${this.generateRGB()}`);
