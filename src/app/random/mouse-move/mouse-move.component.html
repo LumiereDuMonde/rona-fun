@@ -1,0 +1,9 @@
+<div class="container">
+  <canvas #canvas></canvas>
+  <div>
+    <div>
+      <button type="button" (click)="isShowing= !isShowing">{{ isShowing ? 'Hide' : 'Show'}}</button>
+    </div>
+    <div appDynamicAnimate *ngFor="let item of (bubbleFun$ | async)" class="test" [startPosition]="item" (dynamicAnimationDone)="destroyItem(item)"></div>
+  </div>
+</div>
