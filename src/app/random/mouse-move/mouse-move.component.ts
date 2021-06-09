@@ -1,12 +1,17 @@
 import { Subject, fromEvent, interval, merge } from 'rxjs';
 import {
+  filter,
   map,
+  mapTo,
   repeat,
   scan,
   skipUntil,
+  startWith,
   takeUntil,
+  tap,
   throttleTime,
-  timestamp
+  timestamp,
+  withLatestFrom
 } from 'rxjs/operators';
 
 import { Component } from '@angular/core';
@@ -18,8 +23,8 @@ import { StartPosition } from '../core/dynamic-animate.directive';
   styleUrls: ['./mouse-move.component.scss']
 })
 export class MouseMoveComponent {
- // partyUrls = ['assets/img/balloon.svg']; //,'assets/img/cake.svg','assets/img/bear.svg'
- // partyUrls = ['assets/img/skull.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg'
+  // partyUrls = ['assets/img/balloon.svg']; //,'assets/img/cake.svg','assets/img/bear.svg'
+  // partyUrls = ['assets/img/skull.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg'
   mouseDown$ = fromEvent<MouseEvent>(document, 'mousedown');
   // mouse movements
   mouseMove$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
@@ -47,21 +52,32 @@ export class MouseMoveComponent {
     })
   );
 
+  pause$ = fromEvent(document, 'dblclick').pipe(mapTo(false));
+  resume$ = fromEvent(document, 'click').pipe(mapTo(true));
+  ltrPauseStream$ = merge(this.pause$, this.resume$).pipe(
+    startWith(true),
+    tap(x => console.log)
+  );
+
   // left to right stream, moving a stream of bubbles across the screen in the middle
+  // pauses when user double clicks, resumes when they click
   ltrStream$ = interval(10).pipe(
+    withLatestFrom(this.ltrPauseStream$),
+    filter(([a,b]) => b),
+    map(([a,b]) => a),
     timestamp(),
-    map(x => {
+    map((x) => {
       const width = window.innerWidth;
-      const increment = (width / 750); // takes 7.5 seconds to move across screen
-      let xPos = (increment * x.value); // find where we are at left to right
-      xPos = (xPos > width) ? (xPos % width) : xPos; // went past far edge, adjust
+      const increment = width / 750; // takes 7.5 seconds to move across screen
+      let xPos = increment * x.value; // find where we are at left to right
+      xPos = xPos > width ? xPos % width : xPos; // went past far edge, adjust
       return {
         x: xPos,
         y: window.innerHeight / 2,
         timestamp: x.timestamp
       } as StartPosition;
     })
-  )
+  );
 
   bubbleEnd$ = new Subject<StartPosition>();
   bubbleStart$ = merge(this.mouseMove$, this.touchMove$).pipe(
