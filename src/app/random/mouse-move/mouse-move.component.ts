@@ -1,4 +1,4 @@
-import { Subject, fromEvent, merge } from 'rxjs';
+import { Subject, fromEvent, interval, merge } from 'rxjs';
 import {
   map,
   repeat,
@@ -18,8 +18,18 @@ import { StartPosition } from '../core/dynamic-animate.directive';
   styleUrls: ['./mouse-move.component.scss']
 })
 export class MouseMoveComponent {
+ // partyUrls = ['assets/img/balloon.svg']; //,'assets/img/cake.svg','assets/img/bear.svg'
+ // partyUrls = ['assets/img/skull.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg'
   mouseDown$ = fromEvent<MouseEvent>(document, 'mousedown');
-  mouseMove$ = fromEvent<MouseEvent>(document, 'mousemove');
+  // mouse movements
+  mouseMove$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
+    map((x) => {
+      return {
+        x: x.clientX,
+        y: x.clientY
+      };
+    })
+  );
   mouseUp$ = fromEvent<MouseEvent>(document, 'mouseup');
   mousePath$ = this.mouseMove$.pipe(
     skipUntil(this.mouseDown$),
@@ -27,20 +37,46 @@ export class MouseMoveComponent {
     repeat()
   );
 
+  // touch movements, I am ignoring touch start/end currently
+  touchMove$ = fromEvent<TouchEvent>(document, 'touchmove').pipe(
+    map((x) => {
+      return {
+        x: x.touches[0].clientX,
+        y: x.touches[0].clientY
+      };
+    })
+  );
+
+  // left to right stream, moving a stream of bubbles across the screen in the middle
+  ltrStream$ = interval(10).pipe(
+    timestamp(),
+    map(x => {
+      const width = window.innerWidth;
+      const increment = (width / 750); // takes 7.5 seconds to move across screen
+      let xPos = (increment * x.value); // find where we are at left to right
+      xPos = (xPos > width) ? (xPos % width) : xPos; // went past far edge, adjust
+      return {
+        x: xPos,
+        y: window.innerHeight / 2,
+        timestamp: x.timestamp
+      } as StartPosition;
+    })
+  )
+
   bubbleEnd$ = new Subject<StartPosition>();
-  bubbleStart$ = this.mouseMove$.pipe(
+  bubbleStart$ = merge(this.mouseMove$, this.touchMove$).pipe(
     throttleTime(20),
     timestamp(),
     map((x) => {
       return {
-        x: x.value.clientX,
-        y: x.value.clientY,
+        x: x.value.x,
+        y: x.value.y,
         timestamp: x.timestamp
       } as StartPosition;
     })
   );
 
-  bubbleFun$ = merge(this.bubbleStart$, this.bubbleEnd$).pipe(
+  bubbleFun$ = merge(this.bubbleStart$, this.bubbleEnd$, this.ltrStream$).pipe(
     scan((acc: StartPosition[], value: StartPosition) => {
       return acc.includes(value)
         ? acc.filter((x) => x != value)

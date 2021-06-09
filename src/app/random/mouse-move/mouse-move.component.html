@@ -1,5 +1,5 @@
 <div class="container">
   <div *ngFor="let item of bubbleFun$ | async">
-    <div appDynamicAnimate  class="bubble" [startPosition]="item" (dynamicAnimationDone)="destroyItem(item)"></div>
+    <div appDynamicAnimate class="bubble" [startPosition]="item" (dynamicAnimationDone)="destroyItem(item)" ></div>
   </div>
 </div>
