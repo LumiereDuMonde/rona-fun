@@ -40,6 +40,7 @@ export class DynamicAnimateDirective implements AfterViewInit {
   @Input() imageUrls: string[] = [];
   @Input() duration: number = 4000;
   @Input() easing: EasingType = EasingType.linear;
+  @Input() maxTravelDistance: number = 400;
   @Input() opacity: number = 0.4;
   @Output() dynamicAnimationDone: EventEmitter<void> = new EventEmitter<void>();
 
@@ -57,8 +58,8 @@ export class DynamicAnimateDirective implements AfterViewInit {
     return `rgb(${this.getRandomInt()},${this.getRandomInt()},${this.getRandomInt()})`;
   }
 
-  generateScale() {
-    return `scale(${this.randomNumber(0.5, 4)})`;
+  generateScale(start = 0.5, end = 4) {
+    return `scale(${this.randomNumber(start, end)})`;
   }
 
   randomNumberFromStartPos(
@@ -72,9 +73,12 @@ export class DynamicAnimateDirective implements AfterViewInit {
   }
 
   generateTranslate() {
-    return `translate(${this.getRandomInt(-400, 400)}px,${this.getRandomInt(
-      -400,
-      400
+    return `translate(${this.getRandomInt(
+      this.maxTravelDistance * -1,
+      this.maxTravelDistance
+    )}px,${this.getRandomInt(
+      this.maxTravelDistance * -1,
+      this.maxTravelDistance
     )}px)`;
   }
 
@@ -94,13 +98,8 @@ export class DynamicAnimateDirective implements AfterViewInit {
   }
 
   private getMouseAnimation(): AnimationMetadata[] {
-    const obj = this.createAnimateObj()
-    return [
-      animate(
-        this.duration+'ms '+this.easing,
-        style(obj)
-      )
-    ];
+    const obj = this.createAnimateObj();
+    return [animate(this.duration + 'ms ' + this.easing, style(obj))];
   }
 
   private createAnimateObj() {
@@ -114,9 +113,9 @@ export class DynamicAnimateDirective implements AfterViewInit {
   }
 
   private getBackgroundUrl() {
-     console.log(this.imageUrls);
-     console.log(this.getRandomInt(0, this.imageUrls.length-1));
-     return `url(${this.imageUrls[this.getRandomInt(0, this.imageUrls.length-1)]}) center center / cover no-repeat`;
+    return `url(${
+      this.imageUrls[this.getRandomInt(0, this.imageUrls.length - 1)]
+    }) center center / cover no-repeat`;
   }
 
   ngAfterViewInit(): void {
@@ -136,10 +135,7 @@ export class DynamicAnimateDirective implements AfterViewInit {
       // use a random color
       backgroundStr = this.generateRGB();
     }
-    this.el.nativeElement.style.setProperty(
-      'background',
-      backgroundStr
-    );
+    this.el.nativeElement.style.setProperty('background', backgroundStr);
 
     // animate it
     this.playAnimation(this.getMouseAnimation());

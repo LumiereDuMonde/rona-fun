@@ -2,6 +2,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background: white;
 }
 
 .bubble {
@@ -9,4 +10,11 @@
   width: 50px;
   border-radius: 50px;
   opacity: 0.2;
+}
+
+.outer {
+  background: rgb(200, 200, 200);
+  position: fixed;
+  opacity: 0.4;
+  transition: 4000ms linear;
 }

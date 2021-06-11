@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { BehaviorSubject } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
-import { BehaviorSubject } from 'rxjs';
 import { CoreModule } from 'src/app/core/core.module';
 import { DOMWingman } from 'src/testing/dom-test-wingman';
 import { ITrade } from '../../models/trade.model';
-
 import { TradeChartComponent } from './trade-chart.component';
 
 describe('TradeChartComponent', () => {
@@ -48,9 +48,6 @@ describe('TradeChartComponent', () => {
     });
 
     describe('ngAfterViewInit', () => {
-      it('Subscription set', () => {
-        expect(component.subscription).toBeTruthy();        
-      });
 
       it('sets trades once Observable emits them', () => {       
        
@@ -77,6 +74,19 @@ describe('TradeChartComponent', () => {
 
   describe('DOM', () => {
     it('has chart', () => {
+      let tradeVal:ITrade = {
+        misc: '',
+        orderType: 'l',
+        price: 14,
+        side: 'b',
+        time: Date.now(),
+        volume: 2
+      };
+
+      trades.next([
+        tradeVal 
+      ]);   
+      fixture.detectChanges();
       expect(wingman.numberOfMatchingItems('#tradeChart')).toBe(1);
     });
   });

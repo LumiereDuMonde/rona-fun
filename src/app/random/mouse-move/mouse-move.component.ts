@@ -8,7 +8,6 @@ import {
   skipUntil,
   startWith,
   takeUntil,
-  tap,
   throttleTime,
   timestamp,
   withLatestFrom
@@ -22,16 +21,15 @@ import { StartPosition } from '../core/dynamic-animate.directive';
   templateUrl: './mouse-move.component.html',
   styleUrls: ['./mouse-move.component.scss']
 })
-export class MouseMoveComponent {
-  // partyUrls = ['assets/img/balloon.svg']; //,'assets/img/cake.svg','assets/img/bear.svg'
-  // partyUrls = ['assets/img/skull.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg'
+export class MouseMoveComponent {  
+  iconUrls = ['assets/img/skull.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg' ['assets/img/balloon.svg']; //,'assets/img/cake.svg','assets/img/bear.svg'
   mouseDown$ = fromEvent<MouseEvent>(document, 'mousedown');
-  // mouse movements
+  // mouse movements, normalizing
   mouseMove$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
-    map((x) => {
+    map((mouseEventToNormalize) => {
       return {
-        x: x.clientX,
-        y: x.clientY
+        x: mouseEventToNormalize.clientX,
+        y: mouseEventToNormalize.clientY
       };
     })
   );
@@ -42,57 +40,55 @@ export class MouseMoveComponent {
     repeat()
   );
 
-  // touch movements, I am ignoring touch start/end currently
+  // touch movements, I am ignoring touch start/end currently, normalizing
   touchMove$ = fromEvent<TouchEvent>(document, 'touchmove').pipe(
-    map((x) => {
+    map((touchEventToNormalize) => {
       return {
-        x: x.touches[0].clientX,
-        y: x.touches[0].clientY
+        x: touchEventToNormalize.touches[0].clientX,
+        y: touchEventToNormalize.touches[0].clientY
       };
     })
   );
 
+  // controlling events for pause/unpause
   pause$ = fromEvent(document, 'dblclick').pipe(mapTo(false));
   resume$ = fromEvent(document, 'click').pipe(mapTo(true));
-  ltrPauseStream$ = merge(this.pause$, this.resume$).pipe(
-    startWith(true),
-    tap(x => console.log)
-  );
+  ltrPauseStream$ = merge(this.pause$, this.resume$).pipe(startWith(true));
 
   // left to right stream, moving a stream of bubbles across the screen in the middle
   // pauses when user double clicks, resumes when they click
   ltrStream$ = interval(10).pipe(
     withLatestFrom(this.ltrPauseStream$),
-    filter(([a,b]) => b),
-    map(([a,b]) => a),
+    filter(([intervalStream$, pauseStreamBoolean$]) => pauseStreamBoolean$), // filter out emissions until unpaused
+    map(([intervalStream$, pauseStreamBoolean$]) => intervalStream$),
     timestamp(),
-    map((x) => {
+    map((intervalCountWithTimeStamp) => {
       const width = window.innerWidth;
       const increment = width / 750; // takes 7.5 seconds to move across screen
-      let xPos = increment * x.value; // find where we are at left to right
+      let xPos = increment * intervalCountWithTimeStamp.value; // find where we are at left to right
       xPos = xPos > width ? xPos % width : xPos; // went past far edge, adjust
       return {
         x: xPos,
         y: window.innerHeight / 2,
-        timestamp: x.timestamp
+        timestamp: intervalCountWithTimeStamp.timestamp
       } as StartPosition;
     })
   );
 
-  bubbleEnd$ = new Subject<StartPosition>();
-  bubbleStart$ = merge(this.mouseMove$, this.touchMove$).pipe(
+  bubbleItemToDestroy$ = new Subject<StartPosition>();
+  followMouseCursorOrTouches$ = merge(this.mouseMove$, this.touchMove$).pipe(
     throttleTime(20),
     timestamp(),
-    map((x) => {
+    map((screenCoordsWithTimeStamp) => {
       return {
-        x: x.value.x,
-        y: x.value.y,
-        timestamp: x.timestamp
+        x: screenCoordsWithTimeStamp.value.x,
+        y: screenCoordsWithTimeStamp.value.y,
+        timestamp: screenCoordsWithTimeStamp.timestamp
       } as StartPosition;
     })
   );
 
-  bubbleFun$ = merge(this.bubbleStart$, this.bubbleEnd$, this.ltrStream$).pipe(
+  bubbleFun$ = merge(this.followMouseCursorOrTouches$, this.ltrStream$,  this.bubbleItemToDestroy$).pipe(
     scan((acc: StartPosition[], value: StartPosition) => {
       return acc.includes(value)
         ? acc.filter((x) => x != value)
@@ -105,6 +101,6 @@ export class MouseMoveComponent {
   ngOnInit(): void {}
 
   destroyItem(item) {
-    this.bubbleEnd$.next(item);
+    this.bubbleItemToDestroy$.next(item);
   }
 }
