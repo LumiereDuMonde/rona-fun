@@ -1,14 +1,15 @@
-import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Action } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { TrafficEffects } from './traffic.effects';
-import * as TradeActions from '../actions/trade.actions';
 import * as BookActions from '../actions/book.actions';
+import * as TradeActions from '../actions/trade.actions';
 import * as TrafficActions from '../actions/traffic.actions';
-import { GenericEvent } from '../models/genericEvent.model';
-import { MessageType, TrafficType } from '../enums/traffic.enum';
 
+import { MessageType, TrafficType } from '../enums/traffic.enum';
+import { Observable, of } from 'rxjs';
+
+import { Action } from '@ngrx/store';
+import { GenericEvent } from '../models/genericEvent.model';
+import { TestBed } from '@angular/core/testing';
+import { TrafficEffects } from './traffic.effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 
 describe('TrafficEffects', () => {
   let effect: TrafficEffects;

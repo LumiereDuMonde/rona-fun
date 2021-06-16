@@ -11,7 +11,7 @@
 
 </div>
 
-<div class="loading-layer" *ngIf="!iconIsVisible && !hasError && hasLocation">    
+<div class="loading-layer" *ngIf="!iconIsVisible && !hasError && hasLocation" >    
     <div class="telemetry-data">
         <div [ngClass]="flashText" (animationend)="flashText.flash = false">{{infoText}}</div>
         <div>{{this.data1[0] }}</div>
@@ -25,5 +25,5 @@
         <div>{{this.data3[2] }}</div>               
     </div>      
 </div>
-<div class="element-animation" *ngIf="!iconIsVisible && !hasError && hasLocation"></div>
+<div class="element-animation" *ngIf="!iconIsVisible && !hasError && hasLocation" ></div>
 

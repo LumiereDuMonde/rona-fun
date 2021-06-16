@@ -1,6 +1,8 @@
 @use "~@material/image-list";
 @import "~@material/image-list/mdc-image-list";
 
+$gutter_size: 2px;
+
 .frame {
     height: 86%;
     width: 100%;
@@ -26,29 +28,30 @@
     }
 }
 
-.my-image-list {
-    justify-content: center;
 
-    @include image-list.masonry-columns(6);
+.my-image-list {
+    justify-content: center;    
+
+    @include image-list.masonry-columns(6, $gutter_size);
 
     @media(max-width: 1400px) {
-        @include image-list.masonry-columns(5);
+        @include image-list.masonry-columns(5, $gutter_size);
     }
 
     @media(max-width: 1020px) {
-        @include image-list.masonry-columns(4);
+        @include image-list.masonry-columns(4, $gutter_size);
     }
 
     @media(max-width: 960px) {
-        @include image-list.masonry-columns(3);
+        @include image-list.masonry-columns(3, $gutter_size);
     }
 
     @media(max-width: 768px) {
-        @include image-list.masonry-columns(2);
+        @include image-list.masonry-columns(2, $gutter_size);
     }
 
     @media(max-width: 480px) {
-        @include image-list.masonry-columns(1);
+        @include image-list.masonry-columns(1, $gutter_size);
     }
 
     &__item {

@@ -31,15 +31,17 @@ export class TrafficEffects {
         if (this.checkIfPayloadOrEvent(traffic.data)) {
           // payload
           const len = traffic.data.length;
-          switch (traffic.data[len - 2]) {
-            case TrafficType.Trade:
-              return this.setTradeAction(traffic.data[1]);
-            case TrafficType.Book:
-              return this.setBookAction(traffic.data);
+          if (len > 2) {
+            switch (traffic.data[len - 2]) {
+              case TrafficType.Trade:
+                return this.setTradeAction(traffic.data[1]);
+              case TrafficType.Book:
+                return this.setBookAction(traffic.data);
+            }
           }
         } else {
           // event
-          return this.processEventAction(traffic.data)          
+          return this.processEventAction(traffic.data);
         }
         return TrafficActions.TRADE_TRAFFIC_UNHANDLED({ data: traffic.data });
       })
@@ -82,27 +84,27 @@ export class TrafficEffects {
 
   private processEventAction(event: GenericEvent) {
     if (event?.event) {
-        switch (event.event) {
-          case MessageType.SubscriptionStatus:
-            if (event?.status == MessageType.Subscribe) {
-              if (event?.subscription?.name == TrafficType.Trade) {
-                return TradeActions.TRADE_STARTED();
-              }
-
-              if (event?.subscription?.name == TrafficType.Book) {
-                return BookActions.BOOK_STARTED();
-              }
-            } else if (event?.status == MessageType.Unsubscribe) {
-              if (event?.subscription?.name == TrafficType.Trade) {
-                return TradeActions.TRADE_ENDED();
-              }
-              if (event?.subscription?.name == TrafficType.Book) {
-                return BookActions.BOOK_ENDED();
-              }
+      switch (event.event) {
+        case MessageType.SubscriptionStatus:
+          if (event?.status == MessageType.Subscribe) {
+            if (event?.subscription?.name == TrafficType.Trade) {
+              return TradeActions.TRADE_STARTED();
             }
-            break;
-        }
+
+            if (event?.subscription?.name == TrafficType.Book) {
+              return BookActions.BOOK_STARTED();
+            }
+          } else if (event?.status == MessageType.Unsubscribe) {
+            if (event?.subscription?.name == TrafficType.Trade) {
+              return TradeActions.TRADE_ENDED();
+            }
+            if (event?.subscription?.name == TrafficType.Book) {
+              return BookActions.BOOK_ENDED();
+            }
+          }
+          break;
       }
-      return TrafficActions.TRADE_TRAFFIC_UNHANDLED({ data: event });
+    }
+    return TrafficActions.TRADE_TRAFFIC_UNHANDLED({ data: event });
   }
 }
