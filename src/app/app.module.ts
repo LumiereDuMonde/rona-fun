@@ -1,26 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ChartsModule } from 'ng2-charts';
-import { StoreModule } from '@ngrx/store';
-
-import { EffectsModule } from '@ngrx/effects';
-import { ChartingEffects } from './charting/effects/charting.effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ROOT_REDUCERS, metaReducers } from './store/app.reducer';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
-import { CoreModule } from './core/core.module';
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { ChartingEffects } from './charting/effects/charting.effects';
+import { ChartsModule } from 'ng2-charts';
+import { CoreModule } from './core/core.module';
+import { EffectsModule } from '@ngrx/effects';
+import { HttpClientModule } from '@angular/common/http';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { MemeModule } from './meme/meme.module';
 import { NavbarContainerComponent } from './home/navbar/container/navbar-container/navbar-container.component';
 import { NavbarPresentationComponent } from './home/navbar/component/navbar-presentation/navbar-presentation.component';
+import { NgModule } from '@angular/core';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from 'src/environments/environment';
-
 
 @NgModule({
   declarations: [
@@ -46,7 +44,7 @@ import { environment } from 'src/environments/environment';
     EffectsModule.forRoot([ChartingEffects]),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument({
-      name: 'NgRx Charting',      
+      name: 'Rona Fun',      
     }) : [],
     ChartsModule,
     CoreModule,
