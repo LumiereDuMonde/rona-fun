@@ -6,3 +6,5 @@ Angular project featuring use of NGRX for state management (store, actions, effe
 Chart sections needs authorization to access (username and password provided on login screen), image search and instrument panel do not.
 
 Github pages link to view the code in action: https://lumieredumonde.github.io/rona-fun/
+
+I can be contacted at LumiereDuMonde079 [at] gmail [dot] com
