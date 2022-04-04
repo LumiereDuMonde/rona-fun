@@ -1,12 +1,12 @@
 <div class="search-bar" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
     <mat-form-field appearance="fill">
-        <mat-label><mat-icon>search</mat-icon></mat-label>
+        <mat-label>Enter search term</mat-label>
         <input id="search" 
             cdkFocusInitial 
             #searchInput 
             matInput 
             type="text" 
-            placeholder="GIF Search" 
+            placeholder="Meme Search" 
             [(ngModel)]="searchTerm" 
             (keydown.enter)="search()">        
     </mat-form-field>    

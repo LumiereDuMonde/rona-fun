@@ -1,0 +1,75 @@
+<form *ngIf="signupForm$ | async as signupForm" [ngrxFormState]="signupForm" (submit)="submit()">
+  <!-- <div>
+    <label>Email</label>
+    <div>
+      <input type="email" placeholder="Email" [ngrxFormControlState]="signupForm.controls.email" />
+    </div>
+  </div> -->
+  <div>
+    <mat-form-field>
+      <input matInput type="email" placeholder="email" [ngrxFormControlState]="signupForm.controls.email">
+      <mat-error *ngIf="true">
+        Please enter a valid email
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput type="password" placeholder="password" [ngrxFormControlState]="signupForm.controls.password">
+      <mat-error *ngIf="signupForm.errors._password?.minLength">
+        Please enter a password of 10 characters
+      </mat-error>
+    </mat-form-field>
+    <!-- <label>Password</label>
+    <div>
+      <input type="password" placeholder="password" [ngrxFormControlState]="signupForm.controls.password" />
+    </div> -->
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput type="password" placeholder="confirm password"
+        [ngrxFormControlState]="signupForm.controls.passwordConfirm">
+      <mat-error *ngIf="signupForm.errors._passwordConfirm?.required">
+        Please enter a password of 10 characters
+      </mat-error>
+    </mat-form-field>
+    <!-- <label>Confirm Password</label>
+    <div>
+      <input type="password" placeholder="confirm password"
+        [ngrxFormControlState]="signupForm.controls.passwordConfirm" />
+    </div> -->
+  </div>
+  <div>
+    <button type="submit" mat-raised-button color="primary" [disabled]="signupForm.isInvalid && signupForm.isSubmitted">
+      Submit
+    </button>
+  </div>
+</form>
+<div *ngIf="(signupForm$ | async).isSubmitted">
+  The form was submitted with the following value:
+  <br />
+  <pre>{{ submittedValue$ | async | json }}</pre>
+</div>
+
+<mat-horizontal-stepper>
+  <mat-step *ngIf="signupForm$ | async as signupForm" [completed]="signupForm.isValid">
+    <form [ngrxFormState]="signupForm">
+      <ng-template matStepLabel>Fill out your name</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button >Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

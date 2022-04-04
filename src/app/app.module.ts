@@ -10,8 +10,6 @@ import { ChartsModule } from 'ng2-charts';
 import { CoreModule } from './core/core.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
-import { MemeModule } from './meme/meme.module';
 import { NavbarContainerComponent } from './home/navbar/container/navbar-container/navbar-container.component';
 import { NavbarPresentationComponent } from './home/navbar/component/navbar-presentation/navbar-presentation.component';
 import { NgModule } from '@angular/core';
@@ -49,8 +47,7 @@ import { environment } from 'src/environments/environment';
     ChartsModule,
     CoreModule,
     AuthModule    
-  ],
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
+  ], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

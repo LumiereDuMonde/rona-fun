@@ -4,7 +4,7 @@ import * as fromAuth from './reducers';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { LoginUser } from './models/LoginUser.model';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';

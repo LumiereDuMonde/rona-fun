@@ -14,7 +14,7 @@ export const environment = {
   BITCOIN_WEBSOCKET_URL: 'wss://ws.kraken.com/',
   BITCOIN_CURRENCY_PAIRING: 'XBT/USD',
   BITCOIN_RECONNECT_INTERVAL: 5000,
-  GOOGLE_MAP_KEY: "AIzaSyBdcFJr0vBJ9xhK_dHIlKv7VR37gIIDiyc"
+  GOOGLE_MAP_KEY: "AIzaSyBdcFJr0vBJ9xhK_dHIlKv7VR37gIIDiyc"  
 };
 
 export const stateAPIURL = (state) => `assets/${state}.json`;

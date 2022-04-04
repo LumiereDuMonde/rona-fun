@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'trading', loadChildren: () => import('./trading/trading.module').then(m => m.TradingModule) },
   { path: 'map', loadChildren: () => import('./map/map.module').then(m => m.MapModule) },
   { path: 'random', loadChildren: () => import('./random/random.module').then(m => m.RandomModule) },
+  { path: 'stepper', loadChildren: () => import('./stepper/stepper.module').then(m => m.StepperModule) },
   { path: '**', redirectTo: '/auth'}
 ];
 
