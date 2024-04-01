@@ -26,8 +26,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-          with:
-            ref: stepper
+        with:
+          ref: stepper
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
