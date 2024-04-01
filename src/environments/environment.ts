@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   nationalAPIURL: 'assets/us.json',
-  signInURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBJqVnwW4N_lXqqpEEMTCXjvcXmzJTSNPE',
-  API_KEY: 'AIzaSyBJqVnwW4N_lXqqpEEMTCXjvcXmzJTSNPE',
+  signInURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBYeQUxa1e5ixKQkkv4wDK2lzryyZgnwyE',
+  API_KEY: 'AIzaSyBYeQUxa1e5ixKQkkv4wDK2lzryyZgnwyE',
   GIPHY_API_KEY: '8fKQgxFhleNT0glKiICA1QzAgU77B94x',
   GIPHY_API_URL_TRENDING: 'https://api.giphy.com/v1/gifs/trending',
   GIPHY_API_URL_SEARCH: 'https://api.giphy.com/v1/gifs/search',
