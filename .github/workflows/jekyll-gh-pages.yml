@@ -55,7 +55,7 @@ jobs:
           npm ci
       - name: Build
         run: |
-          npm run build -- --prod --output-path docs --base-href "https://lumieredumonde.github.io/rona-fun/"       
+          npm run build -- --prod    
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Build with Jekyll
