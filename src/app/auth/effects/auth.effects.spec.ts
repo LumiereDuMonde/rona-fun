@@ -1,14 +1,16 @@
-import { TestBed } from '@angular/core/testing';
-import { AuthService } from '../auth.service';
-import { AuthEffects } from './auth.effects';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable, of, throwError } from 'rxjs';
-import { Action, Store } from '@ngrx/store';
-import { RouterTestingModule } from '@angular/router/testing';
-import { LoginUser } from '../models/LoginUser.model';
-import { User } from 'src/app/models/user.model';
 import * as AuthActions from '../actions/auth.actions';
+
+import { Action, Store } from '@ngrx/store';
+import { Observable, of, throwError } from 'rxjs';
+
+import { AuthEffects } from './auth.effects';
+import { AuthService } from '../auth.service';
+import { LoginUser } from '../models/loginUser.model';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed } from '@angular/core/testing';
+import { User } from 'src/app/models/user.model';
+import { provideMockActions } from '@ngrx/effects/testing';
 
 describe('AuthEffects', () => {
   let service: AuthEffects;

@@ -1,7 +1,9 @@
-import { Action, createReducer, on } from '@ngrx/store';
 import * as TradeActions from '../actions/trade.actions';
-import { TradeState } from '../enums/tradeState.enum';
+
+import { Action, createReducer, on } from '@ngrx/store';
+
 import { ITrade } from '../models/trade.model';
+import { TradeState } from '../enums/tradeState.enum';
 
 export const tradesFeatureKey = 'trades';
 
@@ -21,7 +23,7 @@ const tradeReducer = createReducer(
     initialState,
     on(
         TradeActions.TRADE_STARTING,
-        (state) => ({ ...state, connected: TradeState.CONNECTING }),
+        (state) => ({ ...state, connected: TradeState.CONNECTING, trades: initialState.trades, lastTrade: initialState.lastTrade }),
     ),
     on(
         TradeActions.TRADE_STARTED,
@@ -29,7 +31,7 @@ const tradeReducer = createReducer(
     ),
     on(
         TradeActions.TRADE_ENDED,
-        (state) => ({ ...state, connected: TradeState.DISCONNECTED, trades: initialState.trades })
+        (state) => ({ ...state, connected: TradeState.DISCONNECTED, trades: initialState.trades, lastTrade: initialState.lastTrade })
     ),
     on(
         TradeActions.TRADE_ENDING,
@@ -37,7 +39,12 @@ const tradeReducer = createReducer(
     ),
     on(
         TradeActions.TRADE_PAYLOAD,
-        (state, action) => ({...state, lastTrade: [...action.trades], trades: [...state.trades, ...action.trades]})  
+        (state, action) => {
+          if (state.connected == TradeState.CONNECTED) 
+            return {...state, lastTrade: [...action.trades], trades: [...state.trades, ...action.trades]}
+          else 
+            return {...state};
+        }  
     )
 );
 

@@ -8,7 +8,7 @@ export enum MessageType {
     Pong = "pong",
     Heartbeat = "heartbeat",
     SystemStatus = "systemStatus",
-    Subscribe = "subscribe",
-    Unsubscribe = "unsubscribe",
+    Subscribe = "subscribed",
+    Unsubscribe = "unsubscribed",
     SubscriptionStatus = "subscriptionStatus"
 }

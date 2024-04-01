@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
+
+import { LoginResult } from '../models/loginResult.model';
+import { LoginUser } from '../models/loginUser.model';
 import { User } from 'src/app/models/user.model';
-import { LoginUser } from '../models/LoginUser.model';
-import { LoginResult } from '../models/LoginResult.model'
 
 const namespace = '[Auth] '
 

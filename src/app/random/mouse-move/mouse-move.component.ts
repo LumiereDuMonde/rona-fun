@@ -1,4 +1,4 @@
-import { Subject, fromEvent, interval, merge } from 'rxjs';
+import { Observable, Subject, fromEvent, interval, merge, of } from 'rxjs';
 import {
   filter,
   map,
@@ -8,6 +8,7 @@ import {
   skipUntil,
   startWith,
   takeUntil,
+  tap,
   throttleTime,
   timestamp,
   withLatestFrom
@@ -22,7 +23,7 @@ import { StartPosition } from '../core/dynamic-animate.directive';
   styleUrls: ['./mouse-move.component.scss']
 })
 export class MouseMoveComponent {  
-  iconUrls = []; // ['assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg','assets/img/balloon.svg','assets/img/cake.svg','assets/img/bear.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg' ['assets/img/balloon.svg','assets/img/cake.svg','assets/img/bear.svg']; //
+  iconUrls = []; //['assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg','assets/img/balloon.svg','assets/img/cake.svg','assets/img/bear.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg' ['assets/img/balloon.svg','assets/img/cake.svg','assets/img/bear.svg']; //
   mouseDown$ = fromEvent<MouseEvent>(document, 'mousedown');
   // mouse movements, normalizing
   mouseMove$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
@@ -53,12 +54,14 @@ export class MouseMoveComponent {
   // controlling events for pause/unpause
   pause$ = fromEvent(document, 'dblclick').pipe(mapTo(false));
   resume$ = fromEvent(document, 'click').pipe(mapTo(true));
-  ltrPauseStream$ = merge(this.pause$, this.resume$).pipe(startWith(true));
+
+  
+  leftToRightPauseStream$ = merge(this.pause$, this.resume$).pipe(startWith(true));
 
   // left to right stream, moving a stream of bubbles across the screen in the middle
   // pauses when user double clicks, resumes when they click
-  ltrStream$ = interval(10).pipe(
-    withLatestFrom(this.ltrPauseStream$),
+  leftToRightStream$ = interval(30).pipe(
+    withLatestFrom(this.leftToRightPauseStream$),    
     filter(([intervalStream$, pauseStreamBoolean$]) => pauseStreamBoolean$), // filter out emissions until unpaused
     map(([intervalStream$, pauseStreamBoolean$]) => intervalStream$),
     timestamp(),
@@ -88,7 +91,7 @@ export class MouseMoveComponent {
     })
   );
 
-  bubbleFun$ = merge(this.followMouseCursorOrTouches$, this.ltrStream$,  this.bubbleItemToDestroy$).pipe(
+  bubbleFun$ = merge(this.followMouseCursorOrTouches$, this.leftToRightStream$,  this.bubbleItemToDestroy$).pipe(
     scan((acc: StartPosition[], value: StartPosition) => {
       return acc.includes(value)
         ? acc.filter((x) => x != value)
@@ -98,7 +101,13 @@ export class MouseMoveComponent {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.resume$.subscribe((ltr) => console.log(`Clicked new value is ${ltr}`));
+  }
+
+  ngAfterViewInit() {
+    
+  }
 
   destroyItem(item) {
     this.bubbleItemToDestroy$.next(item);

@@ -1,6 +1,7 @@
-import * as fromReducer from './auth.reducer';
 import * as AuthActions from '../actions/auth.actions';
-import { LoginUser } from '../models/LoginUser.model';
+import * as fromReducer from './auth.reducer';
+
+import { LoginUser } from '../models/loginUser.model';
 import { User } from 'src/app/models/user.model';
 
 describe('Auth slice of the Auth Reducer', () => {
