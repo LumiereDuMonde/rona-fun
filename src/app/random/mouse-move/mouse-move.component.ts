@@ -22,7 +22,7 @@ import { StartPosition } from '../core/dynamic-animate.directive';
   styleUrls: ['./mouse-move.component.scss']
 })
 export class MouseMoveComponent {  
-  iconUrls = ['assets/img/skull.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg' ['assets/img/balloon.svg']; //,'assets/img/cake.svg','assets/img/bear.svg'
+  iconUrls = ['assets/img/skull.svg','assets/img/cat.svg','assets/img/pumpkin.svg','assets/img/balloon.svg','assets/img/cake.svg','assets/img/bear.svg']; //'assets/img/cat.svg','assets/img/skull.svg','assets/img/pumpkin.svg' ['assets/img/balloon.svg']; //,'assets/img/cake.svg','assets/img/bear.svg'
   mouseDown$ = fromEvent<MouseEvent>(document, 'mousedown');
   // mouse movements, normalizing
   mouseMove$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
