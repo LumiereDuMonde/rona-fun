@@ -5,8 +5,8 @@ import * as fromAuth from './reducers';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 
-import { LoginResult } from './models/LoginResult.model';
-import { LoginUser } from './models/LoginUser.model';
+import { LoginResult } from './models/loginResult.model';
+import { LoginUser } from './models/loginUser.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { SubSink } from 'subsink';

@@ -8,7 +8,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { AuthService } from './auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginResult } from './models/LoginResult.model';
+import { LoginResult } from './models/loginResult.model';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';

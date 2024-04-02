@@ -3,7 +3,7 @@ import * as fromAuth from './reducers';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { LoginUser } from './models/LoginUser.model';
+import { LoginUser } from './models/loginUser.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
