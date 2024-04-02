@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
-import { AuthService } from '../auth.service';
-import { LoginUser } from '../models/LoginUser.model';
 import * as AuthActions from '../actions/auth.actions';
-import { Store } from '@ngrx/store';
 import * as fromAuth from '../reducers';
+
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+
+import { AuthService } from '../auth.service';
+import { Injectable } from '@angular/core';
+import { LoginUser } from '../models/loginUser.model';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
