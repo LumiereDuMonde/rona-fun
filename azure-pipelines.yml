@@ -24,7 +24,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy dist to artifacts'
   inputs:
-    SourceFolder: 'dist/rona-fun'
+    SourceFolder: 'D:\a\_temp'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)/dist'
     cleanTargetFolder: true
