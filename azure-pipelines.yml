@@ -18,13 +18,13 @@ steps:
 - script: |
     npm install -g @angular/cli@11.1.2
     npm install
-    ng build --prod
+    ng build --prod --verbose
   displayName: 'npm install and build'
 
 - task: CopyFiles@2
   displayName: 'Copy dist to artifacts'
   inputs:
-    SourceFolder: 'D:\a\_temp'
+    SourceFolder: '/dist'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)/dist'
     cleanTargetFolder: true
