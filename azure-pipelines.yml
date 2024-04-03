@@ -24,10 +24,10 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy dist to artifacts'
   inputs:
-      SourceFolder: 'dist/'
-      Contents: '**'
-      TargetFolder: '$(build.artifactstagingdirectory)/dist'
-      cleanTargetFolder: true
+    SourceFolder: 'dist/rona-fun'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)/dist'
+    cleanTargetFolder: true
 
 - task: PublishBuildArtifacts@1
   inputs:
