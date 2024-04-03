@@ -21,6 +21,13 @@ steps:
     ng build --prod
   displayName: 'npm install and build'
 
+- task: CopyFiles@2
+  displayName: 'Copy dist to artifacts'
+  inputs:
+      SourceFolder: 'src/dist'
+      Contents: '**'
+      TargetFolder: '$(build.artifactstagingdirectory)/dist'
+      cleanTargetFolder: true
 
 - task: PublishBuildArtifacts@1
   inputs:
