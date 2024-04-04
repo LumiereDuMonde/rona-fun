@@ -20,6 +20,10 @@ steps:
     npm run build -- --prod
   displayName: 'Install npm dependencies and build Angular app'
 
+- script: |
+    dir D:\ /AD
+  displayName: 'List Directories in D:'
+
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'D:'
