@@ -28,7 +28,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy dist to artifacts'
   inputs:
-    SourceFolder: 'D:\a\1\s'
+    SourceFolder: 'D:\a\1'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)/dist'
     cleanTargetFolder: true
