@@ -21,7 +21,7 @@ steps:
   displayName: 'Install npm dependencies and build Angular app'
 
 - script: |
-    dir D:\ /AD
+    dir D:\ /S /AD
   displayName: 'List Directories in D:'
 
 - task: CopyFiles@2
