@@ -16,9 +16,13 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    cd
     npm install -g @angular/cli@11.1.2
+    cd
     npm install
+    cd
     ng build --prod --verbose --output-path dist --base-href "https://lumieredumonde.github.io/rona-fun/"
+    cd
   displayName: 'npm install and build'
 
 - task: CopyFiles@2
