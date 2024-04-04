@@ -22,7 +22,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'D:\'
+    SourceFolder: 'D:'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files to Artifact Staging Directory'
