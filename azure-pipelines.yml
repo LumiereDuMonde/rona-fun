@@ -18,7 +18,6 @@ steps:
 - script: |    
     npm install -g @angular/cli@11.1.2    
     npm install    
-    ng build
   displayName: 'npm install'
 
 - script:   
