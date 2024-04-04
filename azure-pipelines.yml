@@ -18,22 +18,19 @@ steps:
 - script: |    
     npm install -g @angular/cli@11.1.2    
     npm install    
-  displayName: 'npm install'
-
-- script:   
-    ng build
-  displayName: 'npm build'
+    npm run build -- --prod
+  displayName: 'npm install and build'
 
 - task: CopyFiles@2
-  displayName: 'Copy dist to artifacts'
   inputs:
-    SourceFolder: 'D:\a\1'
+    SourceFolder: '$(Build.SourcesDirectory)/dist'
     Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)/dist'
-    cleanTargetFolder: true
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy files to Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'angular-web-app'
+    ArtifactName: 'angular-app'
     publishLocation: 'Container'
+  displayName: 'Publish Artifact'
