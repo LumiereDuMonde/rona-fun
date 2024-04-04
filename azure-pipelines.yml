@@ -19,7 +19,11 @@ steps:
     npm install -g @angular/cli@11.1.2    
     npm install    
     ng build
-  displayName: 'npm install and build'
+  displayName: 'npm install'
+
+- script:   
+    ng build
+  displayName: 'npm build'
 
 - task: CopyFiles@2
   displayName: 'Copy dist to artifacts'
