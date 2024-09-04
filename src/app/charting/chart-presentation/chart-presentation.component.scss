@@ -1,9 +1,7 @@
 #container {
+    flex: 1;
     position: relative;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    overflow: hidden; // Prevent content from spilling out
 }
 
 .overlay-background {
@@ -19,9 +17,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        -moz-transform: translateX(-50%) translateY(-50%);
-        -webkit-transform: translateX(-50%) translateY(-50%);
-        transform: translateX(-50%) translateY(-50%);
+        transform: translate(-50%, -50%);
     }
 
     .nodata {
@@ -31,4 +27,31 @@
     &.transparent {
         background-color: inherit;
     }
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; // Prevent content from spilling out
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#container > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
 }

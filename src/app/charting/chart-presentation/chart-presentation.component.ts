@@ -1,10 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { BaseChartDirective, Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
 import * as moment from 'moment/moment';
+
+import { BaseChartDirective, Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ViewChild } from '@angular/core';
-
 
 @Component({
   selector: 'app-chart-presentation',
@@ -24,7 +25,8 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
   ];
   yAxes = true;
   lineChartOptions: ChartOptions = {
-    responsive: true,    
+    responsive: true,
+    maintainAspectRatio: false,
     title: {
       display: false,
       text: ''
@@ -37,6 +39,10 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
         },
         time: {
           minUnit: 'month'
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 10
         }
       }],
       yAxes: [{
@@ -45,6 +51,7 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
         display: this.yAxes,
         position: 'left',
         ticks: {
+          beginAtZero: true,
           min: 0
         },
       }, {
@@ -55,6 +62,7 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
         stacked: false,
         gridLines: { drawOnChartArea: false },
         ticks: {
+          beginAtZero: true,
           min: 0
         }
       }],
@@ -66,7 +74,7 @@ export class ChartPresentationComponent implements OnInit, OnDestroy {
       }
     },
     plugins: {
-      streaming: false // needed to disable streaming from streaming plugin
+      streaming: false
     }
   };
 

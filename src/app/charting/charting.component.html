@@ -23,7 +23,7 @@
     </mat-select>
   </mat-form-field>
 </div>
-<div class="chart-row">
+<div class="chart-grid">
   <app-chart-presentation id="infectionsChart" [chartdata]="$infectionData | ngrxPush" [chartLabels]="$chartLabels | ngrxPush"
     [chartTitle]="'Infections'" [lineChartColors]="infectionChartColors" [loading]="$loading | ngrxPush" [chartDataEmpty]="($infectionData | ngrxPush)[0].empty && ($infectionData | ngrxPush)[1].empty">
   </app-chart-presentation>

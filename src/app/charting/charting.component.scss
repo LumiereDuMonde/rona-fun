@@ -32,6 +32,32 @@
     }    
 }
 
+.chart-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+
+    app-chart-presentation {
+        width: 100%;
+        height: 400px; // Fixed height for each chart
+        min-height: 300px;
+    }
+
+    @media screen and (min-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        height: calc(100vh - 200px); // Adjust based on your layout
+        max-height: 900px; // Prevent excessive height on very tall screens
+
+        app-chart-presentation {
+            height: 100%; // Allow charts to fill their grid cell
+        }
+    }
+}
+
 @media screen and (min-width: 900px) {
     .data-date-range {
         flex-direction: row;
