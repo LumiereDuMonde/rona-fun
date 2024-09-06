@@ -8,6 +8,12 @@ import { ITrade } from '../../models/trade.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+declare module 'chart.js' {
+  interface ChartPoint {
+    volume?: number;
+  }
+}
+
 @Component({
   selector: 'app-trade-chart',
   templateUrl: './trade-chart.component.html',
@@ -25,7 +31,8 @@ export class TradeChartComponent {
         //price
         (this.datasets[0].data as ChartPoint[]).push({
           x: +value.time * 1000,
-          y: +value.price
+          y: +value.price,
+          volume: +value.volume
         });
 
         //volume
@@ -58,7 +65,15 @@ export class TradeChartComponent {
     data: [
     ],
     lineTension: 0.0,
-    yAxisID: 'left-axis'
+    yAxisID: 'left-axis',
+    pointRadius: (context) => {
+      const volume = context.dataset.data[context.dataIndex].volume;
+      return Math.sqrt(volume) / 2 + 2; // Adjust this formula as needed
+    },
+    pointHoverRadius: (context) => {
+      const volume = context.dataset.data[context.dataIndex].volume;
+      return Math.sqrt(volume) / 2 + 4; // Adjust this formula as needed
+    }
   }, {
     label: 'Volume',
     data: [],
@@ -125,6 +140,28 @@ export class TradeChartComponent {
       point: {
         radius: 3,
         hitRadius: 4
+      }
+    },
+    tooltips: {
+      callbacks: {
+        label: (tooltipItem, data) => {
+          const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+          const value = tooltipItem.yLabel;
+          
+          if (datasetLabel === 'Bitcoin ($)') {
+            const volume = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].volume;
+            return [
+              `${datasetLabel}: $${value}`,
+              `Volume: ${volume}`
+            ];
+          } else if (datasetLabel === 'Volume') {
+            return `${datasetLabel}: ${value}`;
+          }
+        }
+      },
+      backgroundColor: (tooltipItem, data) => {
+        const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+        return datasetLabel === 'Bitcoin ($)' ? 'pink' : 'blue';
       }
     }
   };
