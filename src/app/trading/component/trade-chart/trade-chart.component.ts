@@ -143,6 +143,7 @@ export class TradeChartComponent {
       }
     },
     tooltips: {
+      displayColors: false,
       callbacks: {
         label: (tooltipItem, data) => {
           const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
@@ -158,10 +159,6 @@ export class TradeChartComponent {
             return `${datasetLabel}: ${value}`;
           }
         }
-      },
-      backgroundColor: (tooltipItem, data) => {
-        const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-        return datasetLabel === 'Bitcoin ($)' ? 'pink' : 'blue';
       }
     }
   };
