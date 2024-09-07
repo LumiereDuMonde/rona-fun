@@ -1,50 +1,49 @@
 :host{        
-    background: linear-gradient(90deg, rgba(2,0,36,0.95)  0%, rgba(0,0,0,0.7) 90%), url('../../assets/img/dollardollarbillsyo.jpg') center center / cover no-repeat;
+    background: linear-gradient(135deg, #1c2331 0%, #0f172a 100%);
     display: flex;
-    justify-content: stretch;
-    width: 100%;     
     flex-direction: column;
-    min-height: 100%;   
-    padding-bottom: 1rem;     
+    width: 100%;
+    height: 100vh;
+    padding-top: 60px;
+    box-sizing: border-box;
 }
 
 .trading-section {    
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;   
-    
-    app-trade-chart-container {
-        width: 80%;            
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 1rem;
-        position: relative;        
-    }  
-    
-    @media screen and (min-width: 900px) {
-        margin-top: 64px;            
-    }    
+    padding: 1rem;
+    gap: 1rem;
+    height: calc(100% - 2rem);
+    overflow: hidden;
 
-}
-
-@media screen and (min-width: 1200px) {
-
-    :host{
-        height: 100%;
+    app-trade-chart-container,
+    app-order-book-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .trading-section {
+    app-trade-chart-container {
+        flex: 2;
+        min-height: 300px;
+    }
+
+    app-order-book-container {
+        flex: 1;
+        min-height: 200px;
+        overflow: hidden;
+    }
+
+    @media screen and (min-width: 1200px) {
         flex-direction: row;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        justify-content: center;
+        align-items: stretch;
+
         app-trade-chart-container {
-            width: 45%;            
+            width: 70%;
         }
-        app-order-book-container {            
-            padding-left: 1rem;
+
+        app-order-book-container {
+            width: 30%;
         }
     }
 }

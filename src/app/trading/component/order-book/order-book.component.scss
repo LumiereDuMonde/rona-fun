@@ -1,15 +1,50 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+h4 {
+    margin: 0.5rem 0;
+    text-align: center;
+    color: #e2e8f0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.mat-table {
+    background: transparent;
+    width: 100%;
+    height: calc(100% - 2.5rem);
+    overflow-y: auto;
+}
+
 .mat-header-cell,
 .mat-cell {
-    padding: 0 0.20rem;
-    text-align: center;
+    padding: 0.5rem;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .mat-header-cell {
-    color: rgb(245, 222, 179);
+    text-align: center;
+    font-weight: 600;
+    color: #a0aec0;
 }
 
 .mat-cell {
-    color: rgb(255, 0, 0);
+    text-align: right;
+    color: #e53e3e;
+}
+
+.bid-group .mat-cell {
+    color: #38a169;
 }
 
 mat-row,
@@ -18,43 +53,17 @@ mat-footer-row,
 th.mat-header-cell,
 td.mat-cell,
 td.mat-footer-cell {
-    border-bottom-color: rgb(245, 222, 179);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-.bid-group .mat-cell {
-    color: rgb(0, 255, 0);
-}
-
-h4 {
-    margin: 0.2rem;
-    text-align: center;
-    color: rgb(245, 222, 179);
-    margin-top: 1rem;
-    @media screen and (min-width: 1200px) {
-        margin-top: 2rem;
-    }        
-}
-
-th.mat-header-cell:last-of-type,
-td.mat-cell:last-of-type {
-    padding: 0 0.5rem;
-}
-
-th.mat-header-cell:first-of-type,
-td.mat-cell:first-of-type {
-    padding: 0 0.5rem;
-}
-
-tr.mat-header-row,
-tr.mat-row {
-    height: 1.5rem;
+.mat-column-price,
+.mat-column-volume,
+.mat-column-date {
+    width: 33.33%;
+    min-width: 80px;
 }
 
 table {
-    font-family: 'Inconsolata', monospace;
-    background: transparent;
-    border-color: rgb(245, 222, 179);
+    table-layout: fixed;
     width: 100%;
-    min-width: 220px;
 }
-
